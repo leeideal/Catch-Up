@@ -1,7 +1,7 @@
 import  styled  from 'styled-components';
 import { motion  ,AnimatePresence} from "framer-motion";
 import { useRecoilValue } from "recoil";
-import { isMenu } from '../atoms';
+import { isMenu } from '../../atoms';
 
 const Wapper = styled(motion.div)`
     background-color: aqua;
@@ -16,7 +16,7 @@ const sideMenuVars = {
 	//initial부분
 	start : {
         opactiy: 0,
-        translateX :1200,
+        translateX :1000,
     },
 	// animate + transition부분
 	end : {opactiy : 1, translateX:0, transition: {type : "tween"}},

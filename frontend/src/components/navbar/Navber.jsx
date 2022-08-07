@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faX } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilState } from "recoil";
-import { isMenu } from '../atoms';
+import { isMenu } from '../../atoms';
 
 const Wapper = styled.nav`
     width: 100vw;
