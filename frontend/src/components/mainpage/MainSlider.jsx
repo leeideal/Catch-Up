@@ -16,7 +16,7 @@ const Wapper = styled(motion.section)`
 
 const Slider = styled.section`
     width: ${props => props.theme.mainWidth};
-    max-width:${props => props.theme.mainMaxWidth};
+    max-width:450px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,11 +40,13 @@ const Box = styled(motion.div)`
 const ToRight = styled(FontAwesomeIcon)`
     color : ${props => props.theme.mainColor};
     margin-left: 15px;
+    cursor: pointer;
 `
 
 const ToLeft = styled(FontAwesomeIcon)`
     color : ${props => props.theme.mainColor};
     margin-right: 15px;
+    cursor: pointer;
 `
 
 

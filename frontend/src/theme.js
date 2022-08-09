@@ -7,5 +7,6 @@ export const theme = {
 
     // 크기
     mainWidth : "90%",
-    mainMaxWidth : "450px",
+    mainMaxWidth : "520px",
+
 };

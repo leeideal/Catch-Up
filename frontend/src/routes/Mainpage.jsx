@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import MainSlider from '../components/mainpage/MainSlider';
 import MainInsight from '../components/mainpage/MainInsight';
 import MainReview from '../components/mainpage/MainReview';
+import MainTop from '../components/mainpage/MainTop';
 
 const ToCenter = styled.div`
     width:100vw;
@@ -35,6 +36,7 @@ return (
             <MainSlider />
             <MainInsight />
             <MainReview />
+            <MainTop />
         </Background>
     </ToCenter>
 

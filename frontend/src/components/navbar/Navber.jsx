@@ -32,6 +32,7 @@ const Logo = styled.svg`
 
 const Menubar = styled(FontAwesomeIcon)`
     margin-right: 30px;
+    width: 18px;
 `
 
 function Navber(){

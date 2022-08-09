@@ -10,7 +10,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 
 const Background = styled.section`
-    height: 350px;
+    height: 370px;
     width: 100%;
     background-color : ${props => props.theme.mainSecondBackColor};
     z-index: 2;
@@ -27,6 +27,7 @@ const Header = styled.div`
     max-width:${props => props.theme.mainMaxWidth};
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 10px;
 `
 
 const Title = styled.h2`
@@ -88,24 +89,74 @@ const Insight = styled.section`
 
 const Box = styled(motion.div)`
     margin-top: 15px;
-    width: 95%;
+    width: 96%;
     height: 200px;
     border : 4px solid #7C7B79;
     background-color: white;
-    border-radius: 18px;
+    border-radius: 20px;
+    display: grid;
+    grid-template-rows: 0.9fr 2.3fr 1fr;
+`
+
+const BoxCategory = styled.p`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color : #9B9B9B;
+    font-size: 14px;
+    p{
+        width : 90%
+     }
+    
+`
+
+const BoxTitle = styled.p`
+    display: flex;
+    justify-content: center;
+     width: 100%;
+     font-family: 'Inter', sans-serif;
+     font-size : 20px;
+     font-weight: 600;
+     line-height: 1.3;
+     p{
+        width : 90%
+     }
+`
+
+const BoxChatInfo = styled.div`
+    width: 90%;
+    display: flex;
+    justify-content: flex-end;
+    div{
+        display: flex;
+        flex-direction: column;
+        p{
+            text-align: right;
+            color : #9B9B9B;
+        }
+        p:first-child{
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        p:last-child{
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+
 `
 
 const Overlay = styled(motion.div)`
-  width: 100%;
-  height: 100%;
-  position: fixed;   // 다른것들보다 가장 위에 있게 함
-  top:0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: fixed;   // 다른것들보다 가장 위에 있게 함
+    top:0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.7);
 `;
 
 const BigBox = styled(motion.div)`
@@ -149,13 +200,16 @@ function MainInsight(){
                     {InsightInfo.map(i => (
                         <SwiperSlide key={i.id} >
                             <Box layoutId={i.id+""} onClick={() => onBoxClick(i)}>
-                                <p>{i.category}</p>
-                                <p>
-                                    {i.title}
-                                </p>
-                                <p>
-                                    연결된 대화 수 {i.num}
-                                </p>
+                                <BoxCategory><p>{i.category}</p></BoxCategory>
+                                <BoxTitle>
+                                    <p>{i.title}</p>
+                                </BoxTitle>
+                                <BoxChatInfo>
+                                    <div>
+                                        <p>연결된 대화 수</p>
+                                        <p>{i.num}</p>
+                                    </div>
+                                </BoxChatInfo>
                             </Box>
                         </SwiperSlide>
                     ))}
