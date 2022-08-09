@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import MainSlider from '../components/mainpage/MainSlider';
+import MainInsight from '../components/mainpage/MainInsight';
+import MainReview from '../components/mainpage/MainReview';
+import MainTop from '../components/mainpage/MainTop';
 
 const ToCenter = styled.div`
     width:100vw;
@@ -9,7 +12,7 @@ const ToCenter = styled.div`
 
 const Background = styled.section`
     background-color: ${props => props.theme.mainBackColor};
-    max-width: 500px;
+    max-width: 700px;
     width : 100%; 
     margin-top: 1px;
     display: flex;
@@ -20,7 +23,7 @@ const Background = styled.section`
 const Title = styled.h1`
     font-family: 'Cinzel', serif;
     font-weight: 400;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-top: 5%;
     margin-bottom: 8%;
 `
@@ -31,6 +34,9 @@ return (
         <Background>
             <Title>CATCHUP</Title>
             <MainSlider />
+            <MainInsight />
+            <MainReview />
+            <MainTop />
         </Background>
     </ToCenter>
 
