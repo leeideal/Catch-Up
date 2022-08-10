@@ -14,7 +14,7 @@ class User(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     introduction = models.TextField(null=True)
-    # image = models.ImageField()
+    # image= models.ImageField(upload_to = "profile/", blank=True, null=True) # 사용자들이 시간표를 올릴 때마다 media/profile에 저장됨
     coin = models.IntegerField(default=100)
     star = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(5)])
     # chat_info = models. # chatting 클래스 참조
