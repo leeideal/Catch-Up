@@ -1,9 +1,9 @@
 export const theme = {
     // 배경색, 글꼴 색
-    navBackColor : "#F2F0F3",
-    mainBackColor : "#C7C6C6",
-    mainSecondBackColor : "#F5F5F5",
-    mainColor : "#3A2217",
+    navBackColor : "rgba(104,220,196)",
+    mainBackColor : "white",
+    mainSecondBackColor : "rgba(104,220,196)",
+    mainColor : "rgb(24,62,78);",
 
     // 크기
     mainWidth : "90%",

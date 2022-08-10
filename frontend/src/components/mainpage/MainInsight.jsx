@@ -23,7 +23,7 @@ const Background = styled.section`
 `
 const Header = styled.div`
     margin-top: 40px;
-    color : ${props => props.theme.mainColor};
+    color : rgb(24,62,78);
     display: flex;
     width: ${props => props.theme.mainWidth};
     max-width:${props => props.theme.mainMaxWidth};
@@ -94,7 +94,8 @@ const Box = styled(motion.div)`
     margin-top: 15px;
     width: 96%;
     height: 200px;
-    border : 4px solid #7C7B79;
+    margin-bottom: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     background-color: white;
     border-radius: 20px;
     display: grid;
@@ -115,6 +116,7 @@ const BoxCategory = styled.p`
 
 const BoxTitle = styled.p`
     display: flex;
+    color : rgb(24,62,78);
     justify-content: center;
      width: 100%;
      font-family: 'Inter', sans-serif;

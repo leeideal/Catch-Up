@@ -27,7 +27,7 @@ const Box = styled(motion.div)`
   // 슬라이더 내부 디자인 수정해야..
   width: 100%;
   height: 190px;
-  background-color: rgba(255, 255, 255, 1);
+  background:linear-gradient(200deg, #84fab0 0%, #8fd3f4 100%);
   border-radius: 40px;
   display: flex;
   justify-content: center;

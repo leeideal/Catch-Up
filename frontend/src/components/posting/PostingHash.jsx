@@ -3,6 +3,8 @@ import { faHashtag, faXmark } from "@fortawesome/free-solid-svg-icons";
 import styled from 'styled-components';
 import {useForm} from "react-hook-form";
 import { useState } from 'react';
+import { useSetRecoilState } from "recoil";
+import { isTag } from "../../atoms";
 
 
 const Hash = styled.section`
@@ -66,12 +68,16 @@ const XMark = styled(FontAwesomeIcon)`
 function PostingHash () {
     const [tags, setTags] = useState([]);
     const {register, handleSubmit,setValue} = useForm();
+    const setAtom = useSetRecoilState(isTag)
 
     const onValid = (data) => {
         setTags(prev => {
             return [...prev, `#${data.tag}`]
         })
         setValue("tag", "");
+        setAtom(prev => {
+            return [...prev, `#${data.tag}`]
+        })
     }
 
     const deleteTag = (event) => {

@@ -10,6 +10,7 @@ const Wapper = styled.section`
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    z-index: 2;
 `
 
 const Header = styled.div`
@@ -71,14 +72,14 @@ const Box = styled.div`
     font-family: 'Inter', sans-serif;
     width: 100%;
     height: 150px;
-    border : 4px solid #7C7B79;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
     background-color: white;
     border-radius: 18px;
     margin-top: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    color : #3F3F3F;
+    color:${props => props.theme.mainColor};
 `
 
 const Star = styled(StarRatingComponent)`

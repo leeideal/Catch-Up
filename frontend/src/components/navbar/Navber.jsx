@@ -21,6 +21,7 @@ const GostBox = styled.div`
 `
 
 const Logo = styled.svg`
+    color:rgb(24,62,78);
     cursor: pointer;
     path:first-child{
         stroke: black;
@@ -35,6 +36,7 @@ const Logo = styled.svg`
 const Menubar = styled(FontAwesomeIcon)`
     margin-right: 30px;
     width: 18px;
+    color:rgb(24,62,78);
 `
 
 function Navber(){
