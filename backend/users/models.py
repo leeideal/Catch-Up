@@ -12,8 +12,8 @@ class User(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    introduction = models.TextField()
-    image = models.ImageField()
+    introduction = models.TextField(null=True, default='')
+    image = models.ImageField(null=True)
     coin = models.IntegerField()
     star = models.FloatField()
     # chat_info = models. # chatting 클래스 참조
