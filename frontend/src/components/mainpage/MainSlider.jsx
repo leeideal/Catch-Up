@@ -6,39 +6,47 @@ import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 const Wapper = styled(motion.section)`
     width: 100%;
-    height:150px;
+    height:190px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 70px;
 `
 
 const Slider = styled.section`
-    width: 100%;
+    width: ${props => props.theme.mainWidth};
+    max-width:450px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 `
 
 const Box = styled(motion.div)`
-  width: 250px;
-  height: 100px;
+  // 슬라이더 내부 디자인 수정해야..
+  width: 100%;
+  height: 190px;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   font-size: 28px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
 const ToRight = styled(FontAwesomeIcon)`
-    color : #3A2217;
+    color : ${props => props.theme.mainColor};
+    margin-left: 15px;
+    cursor: pointer;
 `
 
 const ToLeft = styled(FontAwesomeIcon)`
-    color : #3A2217;
+    color : ${props => props.theme.mainColor};
+    margin-right: 15px;
+    cursor: pointer;
 `
 
 
@@ -50,7 +58,7 @@ const Circle = styled(motion.div)`
     width: 9px;
     height: 9px;
     border-radius: 9px;
-    background-color: whitesmoke;
+    background-color: ${props => props.theme.mainSecondBackColor};
     margin: 0 3px;
 `
 
@@ -58,14 +66,14 @@ const CircleHere = styled(motion.div)`
     width: 25px;
     height: 9px;
     border-radius: 9px;
-    background-color: #3A2217;
+    background-color:  ${props => props.theme.mainColor};
     margin: 0 3px;
 `
 
 
 const slider = {
     entry: (back) => ({
-        x: back ? -200 : 200,
+        x: back ? -250 : 250,
         opacity: 0,
         scale: 0,
     }),
@@ -75,7 +83,7 @@ const slider = {
       scale: 1,
       transition: { duration: 0.4 } 
     },
-    exit: (back) => ({ x: back ? 200 : -200, opacity: 0, scale: 0, transition: { duration: 0.4 } })
+    exit: (back) => ({ x: back ? 250 : -250, opacity: 0, scale: 0, transition: { duration: 0.4 } })
 };
 
 const sliderArray = [
@@ -121,7 +129,7 @@ const prevPlease = () => {
 return(
     <Wapper>
         <Slider>
-            <ToLeft icon={faCaretLeft} onClick={prevPlease} size="2x" />
+            <ToLeft icon={faCaretLeft} onClick={prevPlease} size="3x" />
             <AnimatePresence exitBeforeEnter custom={back}>
                 {sliderArray.map(prev => prev.id === visible && (
                     <Box 
@@ -138,7 +146,7 @@ return(
                 </Box>
                 ))}
             </AnimatePresence>
-            <ToRight icon={faCaretRight} onClick={nextPlease} size="2x" />
+            <ToRight icon={faCaretRight} onClick={nextPlease} size="3x" />
         </Slider>
         <SliderPointer>
             {visible === 1 ? <CircleHere layoutId="circle" /> : <Circle />}
