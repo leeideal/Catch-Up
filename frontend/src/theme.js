@@ -9,4 +9,7 @@ export const theme = {
     mainWidth : "90%",
     mainMaxWidth : "520px",
 
+    boardWidth : "85%",
+    boardMaxWidth : "470px"
+
 };

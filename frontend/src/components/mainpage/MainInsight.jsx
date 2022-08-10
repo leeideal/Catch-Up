@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
+import { faCirclePlus, faCircleXmark  } from "@fortawesome/free-solid-svg-icons";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -8,6 +8,8 @@ import "swiper/css";
 import { useState } from 'react';
 
 import { AnimatePresence, motion } from "framer-motion";
+import { Link } from 'react-router-dom';
+import BoardBox from '../board/BoardBox';
 
 const Background = styled.section`
     height: 370px;
@@ -37,13 +39,14 @@ const Title = styled.h2`
 `
 
 const MoreInfo = styled(FontAwesomeIcon)`
+    cursor: pointer;
 `
 
 
 const InsightInfo = [
     {
         category : "#공대생",
-        title : "정보통신공학과 3.03의 네카라쿠배 클라우드 직무 최종합격 후기",
+        title : "정보통신공학과 3.03의 네카라쿠배 클라우드 최종합격 후기",
         num : 25,
         id: 1
     },
@@ -61,7 +64,7 @@ const InsightInfo = [
     },
     {
         category : "#공대생",
-        title : "정보통신공학과 3.03의 네카라쿠배 클라우드 직무 최종합격 후기",
+        title : "정보통신공학과 3.03의 네카라쿠배 클라우드 최종합격 후기",
         num : 25,
         id: 4
     },
@@ -115,7 +118,7 @@ const BoxTitle = styled.p`
     justify-content: center;
      width: 100%;
      font-family: 'Inter', sans-serif;
-     font-size : 20px;
+     font-size : 19px;
      font-weight: 600;
      line-height: 1.3;
      p{
@@ -165,6 +168,15 @@ const BigBox = styled(motion.div)`
     height: 80vh;
     background-color: white;
     border-radius: 20px;
+    position: relative;
+`
+
+const XMark = styled(FontAwesomeIcon)`
+    font-size: 32px;
+    position: absolute;
+    top:15px;
+    right: 15px;
+    cursor: pointer;
 `
 
 
@@ -187,7 +199,7 @@ function MainInsight(){
         <Background>
             <Header>
                 <Title>CATCHUP 들여다보기</Title>
-                <MoreInfo icon={faCirclePlus} size="2x"/>
+                <Link to="/board"><MoreInfo icon={faCirclePlus} size="2x"/></Link>
             </Header>
             <Insight>
                 <Swiper slidesPerView={2.2}
@@ -216,13 +228,14 @@ function MainInsight(){
                     
                     {/* 모달창 */}
                     <AnimatePresence>{clicked ? 
-                        <Overlay 
-                            onClick = {onOverlayClick}
+                        <Overlay
                             initial={{ opacity : 0}}
-                            animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                            animate={{ opacity: 1 }} 
+                            exit={{ opacity: 0 }}
                         >
                             <BigBox layoutId={clickedInfo?.id+""} >
-                                <div>{clickedInfo?.title}</div>
+                                <BoardBox props={clickedInfo}/>
+                                <XMark onClick = {onOverlayClick} icon={faCircleXmark} />
                             </BigBox>
                         </Overlay> : null}
                     </AnimatePresence>
