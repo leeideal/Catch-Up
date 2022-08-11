@@ -15,7 +15,7 @@ const Background = styled.section`
     background-color: ${props => props.theme.mainBackColor};
     max-width: 700px;
     width : 100%; 
-    margin-top: 1px;
+    margin-top: 7px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -27,24 +27,24 @@ const Title = styled.h1`
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 700;
     font-size: 30px;
-    width: ${props => props.theme.boardWidth};
-    max-width:${props => props.theme.boardMaxWidth};
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
     text-align: left;
 `
 
 const SubTitle = styled.h4`
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 16px;
-    width: ${props => props.theme.boardWidth};
-    max-width:${props => props.theme.boardMaxWidth};
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
     text-align: left;
     color : rgba(0,0,0,0.5);
     margin-bottom: 55px;
 `
 
 const BoardDivider = styled.div`
-    width: ${props => props.theme.boardWidth};
-    max-width:${props => props.theme.boardMaxWidth};
+    max-width: 700px;
+    width : 100%; 
     height: 3px;
     border-radius: 4px;
     background-color: black;

@@ -15,15 +15,16 @@ const Hash = styled.section`
 
 const HashTagIcon = styled(FontAwesomeIcon)`
     position: absolute;
-    top: 5px;
+    top: 6px;
     left : 5px;
 `
 
 const TagInput = styled.input`
     width: 50%;
     border-radius: 5px;
-    border: 1px solid #7C7B79;
-    padding: 5px 4px 5px 20px;
+    background-color: #F5F5F5;
+    border: none;
+    padding: 7px 10px 7px 23px;
 `
 
 const HashBtn = styled.button`
@@ -31,8 +32,10 @@ const HashBtn = styled.button`
     border-radius: 5px;
     height: 1.8em;
     border: none;
-    background-color: #7C7B79;
-    color:white;
+    background-color:rgba(104,220,196);
+    color : rgb(24,62,78);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
 `
 
 const TagForm = styled.form`
@@ -54,8 +57,10 @@ const Tag = styled.p`
     border-radius: 5px;
     padding: 5px 8px;
     border: none;
-    background-color: #7C7B79;
-    color:white;
+    background-color: rgba(104,220,196);
+    color : rgb(24,62,78);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
     span{
         margin-right: 6px;
     }

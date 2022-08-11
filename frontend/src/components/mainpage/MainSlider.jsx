@@ -21,20 +21,21 @@ const Slider = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 20px;
     margin-bottom: 20px;
 `
 
 const Box = styled(motion.div)`
   // 슬라이더 내부 디자인 수정해야..
+  color:rgb(24,62,78);
   width: 100%;
   height: 260px;
   background: linear-gradient(255.63deg, #96FBC4 0.99%, #66E4EC 100%);
   border-radius: 40px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
-  font-size: 28px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
 `;
 
@@ -89,31 +90,54 @@ const slider = {
 
 const sliderArray = [
     {
-        title : "이벤트1",
-        body : "이벤트1내용",
-        footer : "이벤트1 아래 내용",
+        title : "SPECIAL",
+        body : "CATCHUP 활용백서",
+        footer : "실사용자들의 후기를 통해서 CATCHUP을 100% 활용하세요!",
         id : 1
     },
     {
-        title : "이벤트2",
-        body : "이벤트2내용",
-        footer : "이벤트2 아래 내용",
+        title : "EVENT",
+        body : "신규가입 이벤트",
+        footer : "신규가입시 츄르 100개 증정! 1:1 대화 신청의 기회를 놓치지 마세요!",
         id : 2
     },
     {
-        title : "이벤트3",
-        body : "이벤트3내용",
-        footer : "이벤트3 아래 내용",
+        title : "HOT",
+        body : "이달의 인기글",
+        footer : "정보통신공학과 3.03의 NAVER 클라우드 보안 직무 최종합격 후기",
         id : 3
     },
     {
-        title : "이벤트4",
-        body : "이벤트4내용",
-        footer : "이벤트4 아래 내용",
+        title : "HOT",
+        body : "이달의 인기글",
+        footer : "이금융공기업 A부터 Z까지! -  한국은행편",
         id : 4
     }
 ]
 
+const BoxCategory = styled.div`
+    margin-top: 45px;
+    width: 70%;
+    p {
+        border: 2px solid rgb(24,62,78);
+        width:76px;
+        text-align: center;
+    }
+`
+
+const BoxTitle = styled.div`
+    width: 70%;
+    font-size: 30px;
+    font-weight: 700;
+    margin-top: 15px;
+`
+
+const BoxBody = styled.div`
+    margin-top: 30px;
+    width: 70%;
+    font-size: 20px;
+    font-weight: 500;
+`
 
 function MainSlider(){
 const [visible, setVisible] = useState(1);
@@ -141,9 +165,11 @@ return(
                     exit="exit"
                     key={prev.id}
                 >
-                    <p>{prev.title}</p>
-                    <p>{prev.body}</p>
-                    <p>{prev.footer}</p>
+                    <BoxCategory>
+                        <p>{prev.title}</p>
+                    </BoxCategory>
+                    <BoxTitle>{prev.body}</BoxTitle>
+                    <BoxBody>{prev.footer}</BoxBody>
                 </Box>
                 ))}
             </AnimatePresence>

@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 const Wapper = styled.section`
-    width: ${props => props.theme.boardWidth};
-    max-width:${props => props.theme.boardMaxWidth};
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
 `
 
 const Search = styled.section`
@@ -20,27 +20,27 @@ const Form = styled.form`
 
 const Input = styled.input`
     width:100%;
-    height: 40px;
-    font-size: 20px;
-    padding-left: 40px;
+    height: 45px;
+    font-size: 22px;
+    padding-left: 42px;
     border : none;
-    border-radius: 10px;
+    border-radius: 15px;
+    background-color: #F5F5F5;
 `
 
 const InputIcon = styled(FontAwesomeIcon)`
     position: absolute;
-    bottom : 6px;
-    left: 6px;
+    bottom : 9px;
+    left: 8px;
     font-size: 27px;
 `
 
 
 
 function BoardSearch() {
-    const {register, handleSubmit, setValue} = useForm();
+    const {register, handleSubmit} = useForm();
     const onValid = (data) => {
         console.log(data);
-        setValue("search" , "")
     }
 
     return (

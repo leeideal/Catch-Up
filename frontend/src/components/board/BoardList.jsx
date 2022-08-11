@@ -7,20 +7,27 @@ import { useState } from 'react';
 import BoardBox from './BoardBox';
 
 const Wapper = styled.section`
-    width: ${props => props.theme.boardWidth};
-    max-width:${props => props.theme.boardMaxWidth};
+    max-width: 700px;
+    width : 100%; 
 `
 const List = styled.section`
-    margin-top: 40px;
+    margin-top: 50px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 60px 0;
+    background-color: rgba(104,220,196);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 const BoxWapper = styled(motion.div)`
-    
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
 `
 
 const Box = styled(motion.div)`
     margin-bottom: 40px;
-    width: 100%;
     background-color: white;
     display: flex;
     padding: 20px 15px;
@@ -66,9 +73,10 @@ const Title = styled.p`
 
 const BoxChatInfo = styled.section`
     display: flex;
-    margin-top: 10px;
+    margin-top: 15px;
     color : rgba(0,0,0,0.4);
     font-size: 14px;
+    margin-bottom: 7px;
 `
 
 const Icon = styled(FontAwesomeIcon)`
@@ -79,7 +87,7 @@ const Rate = styled.div`
     display: flex;
     p{
         position: relative;
-        top: 2.5px;
+        top: 1px;
         margin-left: 5px;
     }
 `
@@ -89,7 +97,7 @@ const ChatNum = styled.div`
     display: flex;
     p{
         position: relative;
-        top: 2.5px;
+        top: 1px;
         margin-left: 5px;
     }
 `
@@ -110,7 +118,7 @@ const Like = styled.div`
     display: flex;
     p{
         position: relative;
-        top: 2.5px;
+        top: 1px;
         margin-left: 5px;
     }
 `
