@@ -14,7 +14,7 @@ import BoardBox from '../board/BoardBox';
 const Background = styled.section`
     height: 370px;
     width: 100%;
-    background-color : ${props => props.theme.mainSecondBackColor};
+    background-color : #F5F5F5;
     z-index: 2;
     display: flex;
     flex-direction: column;

@@ -9,6 +9,7 @@ const ToCenter = styled.div`
     width:100vw;
     display: flex;
     justify-content: center;
+    margin-top: 7px;
 `
 
 const Background = styled.section`
@@ -38,7 +39,7 @@ const BigCricle = styled.div`
     border-radius: 800px;
     background: linear-gradient(240deg, #84fab0 0%, #8fd3f4 100%);
     position: absolute;
-    top: 1100px;
+    top: 1105px;
     right : 250px;
 
 `
@@ -49,7 +50,7 @@ const MiddleCircle1 = styled.div`
     border-radius: 200px;
     background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
     position: absolute;
-    top: 900px;
+    top: 905px;
     right : -50px;
 `
 
@@ -59,7 +60,7 @@ const SmallCircle2 = styled.div`
     border-radius: 80px;
     background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
     position: absolute;
-    top: 1800px;
+    top: 1805px;
     right : 100px;
 `
 
@@ -69,7 +70,7 @@ const SmallCircle1 = styled.div`
     border-radius: 100px;
     background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
     position: absolute;
-    top: 770px;
+    top: 775px;
     left : 150px;
 `
 
@@ -79,7 +80,7 @@ const MiddleCircle2 = styled.div`
     border-radius: 330px;
     background: linear-gradient(300deg, #84fab0 0%, #8fd3f4 100%);
     position: absolute;
-    top: 2200px;
+    top: 2205px;
     right : -10px;
 `
 
@@ -89,7 +90,7 @@ const MiddleCircle3 = styled.div`
     border-radius: 230px;
     background: linear-gradient(30deg, #84fab0 0%, #8fd3f4 100%);
     position: absolute;
-    top: 2000px;
+    top: 2005px;
     left : 50px;
 `
 
