@@ -10,6 +10,7 @@ import Board from './routes/Board';
 import Posting from "./routes/Posting";
 import How from './routes/How';
 import About from './routes/About';
+import Login from './routes/Login';
 
 function Routers(){
 // 메뉴바 클린 check State
@@ -26,6 +27,7 @@ return(
                 <Route path="/posting" element={<Posting />} />
                 <Route path="/how" element={<How />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/Login" element={<Login />} />
             </Routes>
             {isMenuClick && <SideMenu />}
         </ThemeProvider>

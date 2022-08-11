@@ -10,6 +10,7 @@ const ToCenter = styled.div`
     display: flex;
     justify-content: center;
     margin-top: 7px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 `
 
 const Background = styled.section`
@@ -25,8 +26,7 @@ const Background = styled.section`
 `
 
 const Title = styled.h1`
-    font-family: 'Cinzel', serif;
-    font-weight: 400;
+    font-weight: 800;
     font-size: 1.8rem;
     margin-top: 5%;
     margin-bottom: 8%;

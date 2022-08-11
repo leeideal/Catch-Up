@@ -2,6 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import Routers from './Routes';
 
 const GlobalStyle = createGlobalStyle`
+@import url("https://fonts.googleapis.com/earlyaccess/notosanskr.css");
 @import url('https://rsms.me/inter/inter.css');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&display=swap');
  html, body, div, span, applet, object, iframe,

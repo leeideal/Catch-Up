@@ -66,7 +66,7 @@ function SideMenu(){
             <AnimatePresence>
                 {isMenuClick && (<Wapper variants={sideMenuVars} initial="start" animate="end" exit={{ scale: 0 }}>
                     <MList>
-                        <Link to="/">
+                        <Link to="/login">
                             <Log onClick={onClick}>
                                 로그인
                             </Log>

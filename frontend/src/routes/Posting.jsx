@@ -29,6 +29,7 @@ const Title = styled.h1`
     width: ${props => props.theme.boardWidth};
     max-width:${props => props.theme.boardMaxWidth};
     text-align: left;
+    color : rgb(24,62,78);
 `
 
 const Form = styled.form`
@@ -46,6 +47,7 @@ const FormSection = styled.div`
 
 const SubTitle = styled.h3`
     font-size: 18px;
+    color : rgb(24,62,78);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 700;
     margin-bottom: 7px;
@@ -53,32 +55,37 @@ const SubTitle = styled.h3`
 
 const TitleInput = styled.input`
     width: 100%;
-    border-radius: 5px;
-    border: 1px solid #7C7B79;
-    padding: 5px 4px;
+    border-radius: 10px;
+    border: none;
+    margin-top: 3px;
+    background-color: #F5F5F5;
+    padding: 8px 10px;
 `
 
 const TextInput = styled.textarea`
     width: 100%;
-    padding: 5px 4px;
-    border-radius: 5px;
+    padding: 12px 12px;
+    border-radius: 10px;
     border: none;
+    margin-top: 3px;
+    background-color: #F5F5F5;
     resize: none;
     height: 25em;
-    border: 1px solid #7C7B79;
 `
 
 const ChurInput  = styled.input`
     width: 60%;
-    border-radius: 5px;
-    border: 1px solid #7C7B79;
-    padding: 5px 4px;
+    border: none;
+    margin-top: 3px;
+    border-radius: 10px;
+    background-color: #F5F5F5;
+    padding: 8px 10px;
     margin-bottom: 20px;
 `
 
 const TagSection = styled.div`
     position: absolute;
-    top : 610px;
+    top : 620px;
     width: ${props => props.theme.boardWidth};
     max-width:${props => props.theme.boardMaxWidth};
 `
@@ -88,11 +95,11 @@ const FormBtn = styled.button`
     margin-bottom: 80px;
     padding: 10px;
     border: none;
-    background-color: #7C7B79;
-    color:white;
+    background-color: rgba(104,220,196);
+    color : rgb(24,62,78);
     border-radius: 10px;
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 800;
     cursor: pointer;
 `
 
@@ -110,7 +117,7 @@ function Posting(){
     return(
         <ToCenter>
             <Background>
-                <Title>글쓰기</Title>
+                <Title>정보 공유하기</Title>
                 <Form onSubmit={handleSubmit(onValid)}>
                     <FormSection>
                         <SubTitle>제목</SubTitle>
@@ -118,9 +125,9 @@ function Posting(){
                     </FormSection>
                     <FormSection>
                         <SubTitle>내용</SubTitle>
-                        <TextInput {...register("content", {required:true})} placeholder="다른이들에게 전달하고 싶은 자신만의 이야기를 써보세요!"></TextInput>
+                        <TextInput {...register("content", {required:true})} placeholder="다른이들에게 공유하고 싶은 자신만의 이야기를 써보세요!"></TextInput>
                     </FormSection>
-                    <FormSection style={{marginTop: "160px"}}>
+                    <FormSection style={{marginTop: "170px"}}>
                         <SubTitle>츄르 (1~50개)</SubTitle>
                         <ChurInput type ={'number'} {...register("chur", {required:true, min:"1", max:"50"})} placeholder="원하는 츄르 갯수를 입력해주세요!"></ChurInput>
                     </FormSection>
