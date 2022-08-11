@@ -6,17 +6,18 @@ import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 
 const Wapper = styled(motion.section)`
     width: 100%;
-    height:190px;
+    height:230px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     margin-bottom: 70px;
+
 `
 
 const Slider = styled.section`
-    width: ${props => props.theme.mainWidth};
-    max-width:450px;
+    width: 95%;
+    max-width:580px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,8 +27,8 @@ const Slider = styled.section`
 const Box = styled(motion.div)`
   // 슬라이더 내부 디자인 수정해야..
   width: 100%;
-  height: 190px;
-  background-color: rgba(255, 255, 255, 1);
+  height: 260px;
+  background: linear-gradient(255.63deg, #96FBC4 0.99%, #66E4EC 100%);
   border-radius: 40px;
   display: flex;
   justify-content: center;
@@ -58,7 +59,7 @@ const Circle = styled(motion.div)`
     width: 9px;
     height: 9px;
     border-radius: 9px;
-    background-color: ${props => props.theme.mainSecondBackColor};
+    background-color: ${props => props.theme.mainColor};
     margin: 0 3px;
 `
 
@@ -73,7 +74,7 @@ const CircleHere = styled(motion.div)`
 
 const slider = {
     entry: (back) => ({
-        x: back ? -250 : 250,
+        x: back ? -280 : 280,
         opacity: 0,
         scale: 0,
     }),
@@ -83,7 +84,7 @@ const slider = {
       scale: 1,
       transition: { duration: 0.4 } 
     },
-    exit: (back) => ({ x: back ? 250 : -250, opacity: 0, scale: 0, transition: { duration: 0.4 } })
+    exit: (back) => ({ x: back ? 280 : -280, opacity: 0, scale: 0, transition: { duration: 0.4 } })
 };
 
 const sliderArray = [

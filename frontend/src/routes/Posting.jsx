@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import {useForm} from "react-hook-form";
 import PostingHash from '../components/posting/PostingHash';
+import { useRecoilValue } from 'recoil';
+import { isTag } from '../atoms';
 
 const ToCenter = styled.div`
 width:100vw;
@@ -97,10 +99,12 @@ const FormBtn = styled.button`
 
 
 function Posting(){
+    const isAtom = useRecoilValue(isTag);
     const {register, handleSubmit } = useForm();
 
     const onValid = (data) => {
-        console.log(data)
+        const newData = {...data, isAtom}
+        console.log(newData);
     }
 
     return(
