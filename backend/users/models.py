@@ -53,7 +53,7 @@ class User(AbstractUser):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nickname = models.CharField(max_length=20, null=False, blank=False, unique=True)
+    nickname = models.CharField(max_length=20, null=True, blank=False, unique=True)
     introduction = models.TextField(null=True)
     image= models.ImageField(upload_to = "profile/", blank=True, null=True) # 사용자들이 시간표를 올릴 때마다 media/profile에 저장됨
     coin = models.IntegerField(default=100)
