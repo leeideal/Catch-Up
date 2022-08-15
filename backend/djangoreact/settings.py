@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'post',
     'corsheaders',
     'users',
+    'chat',
 
     #설치한 라이브러리들
     'rest_framework',
