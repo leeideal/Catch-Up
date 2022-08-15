@@ -6,3 +6,5 @@ function BoardBox({props}) {
 }
 
 export default BoardBox;
+
+// 모든 페이지 모달창!

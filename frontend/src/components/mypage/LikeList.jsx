@@ -4,12 +4,39 @@ import { faStar, faHeart, faMessage, faCircleXmark } from "@fortawesome/free-sol
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useState } from 'react';
-import BoardBox from './BoardBox';
+import BoardBox from '../board/BoardBox';
+
+const ToCenter = styled.div`
+    color: rgb(24,62,78);
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+`
+
+const Background = styled.section`
+    background-color: ${props => props.theme.mainBackColor};
+    max-width: 700px;
+    width : 100%; 
+    margin-top: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const BigTitle = styled.h1`
+    margin-top:40px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 30px;
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
+    text-align: left;
+`
 
 const Wapper = styled.section`
     max-width: 700px;
     width : 100%; 
-    color: rgb(24,62,78);
 `
 const List = styled.section`
     margin-top: 50px;
@@ -158,8 +185,6 @@ const XMark = styled(FontAwesomeIcon)`
 // BigBox
 
 
-
-
 const InsightInfo = [
     {
         img : "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
@@ -193,7 +218,7 @@ const InsightInfo = [
     },
 ]
 
-function BoardList(){
+function LikeList () {
     const [clicked, setClicked] = useState(false);
     const [clickedInfo, setClickedInfo] = useState([]);
 
@@ -207,53 +232,57 @@ function BoardList(){
     }
 
     return(
-        <Wapper>
-            <List>
-                {InsightInfo.map(prev => (
-                    <BoxWapper layoutId={prev.id+""} onClick={() => onBoxClick(prev)} key={prev.id}>
-                        <Box >
-                        <BoxProfile>
-                            <Img src={prev.img} />
-                            <Name>{prev.name}</Name>
-                        </BoxProfile>
-                        <BoxInfo>
-                            <Title>{prev.title}</Title>
-                            <Tags>{prev.category.map(i => <p>{i}</p>)}</Tags>
-                            <BoxChatInfo>
-                                <Rate>
-                                    <Icon icon={faStar} />
-                                    <p>{prev.rate}</p>
-                                </Rate>
-                                <Like>
-                                    <Icon icon={faHeart} />
-                                    <p>{prev.like}</p>
-                                </Like>
-                                <ChatNum>
-                                    <Icon icon={faMessage} />
-                                    <p>{prev.link}</p>
-                                </ChatNum>
-                            </BoxChatInfo>
-                        </BoxInfo>
-                    </Box>
-                    </BoxWapper>
-                ))}
-            </List>
+        <ToCenter>
+            <Background>
+                <BigTitle>내가 좋아요 누른 글</BigTitle>
+                <Wapper>
+                <List>
+                    {InsightInfo.map(prev => (
+                        <BoxWapper layoutId={prev.id+""} onClick={() => onBoxClick(prev)} key={prev.id}>
+                            <Box >
+                            <BoxProfile>
+                                <Img src={prev.img} />
+                                <Name>{prev.name}</Name>
+                            </BoxProfile>
+                            <BoxInfo>
+                                <Title>{prev.title}</Title>
+                                <Tags>{prev.category.map(i => <p>{i}</p>)}</Tags>
+                                <BoxChatInfo>
+                                    <Rate>
+                                        <Icon icon={faStar} />
+                                        <p>{prev.rate}</p>
+                                    </Rate>
+                                    <Like>
+                                        <Icon icon={faHeart} />
+                                        <p>{prev.like}</p>
+                                    </Like>
+                                    <ChatNum>
+                                        <Icon icon={faMessage} />
+                                        <p>{prev.link}</p>
+                                    </ChatNum>
+                                </BoxChatInfo>
+                            </BoxInfo>
+                        </Box>
+                        </BoxWapper>
+                    ))}
+                </List>
 
-            {/* 모달창 */}
-            <AnimatePresence>{clicked ? 
-                        <Overlay 
-                            initial={{ opacity : 0}}
-                            animate={{ opacity: 1 }} 
-                            exit={{ opacity: 0 }}
-                        >
-                            <BigBox layoutId={clickedInfo?.id+""} >
-                                <BoardBox props={clickedInfo}/>
-                                <XMark onClick = {onOverlayClick} icon={faCircleXmark} />
-                            </BigBox>
-                        </Overlay> : null}
-            </AnimatePresence>
-        </Wapper>
+                {/* 모달창 */}
+                <AnimatePresence>{clicked ? 
+                            <Overlay 
+                                initial={{ opacity : 0}}
+                                animate={{ opacity: 1 }} 
+                                exit={{ opacity: 0 }}
+                            >
+                                <BigBox layoutId={clickedInfo?.id+""} >
+                                    <BoardBox props={clickedInfo}/>
+                                    <XMark onClick = {onOverlayClick} icon={faCircleXmark} />
+                                </BigBox>
+                            </Overlay> : null}
+                </AnimatePresence>
+            </Wapper>
+            </Background>
+        </ToCenter>
     );
 }
-
-export default BoardList;
+export default LikeList;

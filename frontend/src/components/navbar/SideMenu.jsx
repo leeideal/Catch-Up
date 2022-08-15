@@ -17,7 +17,7 @@ const Wapper = styled(motion.div)`
     width : 100%; 
     height: 2600px; // 나중에 높이에 따라서 바꿔야 하는 설정!!
     position: absolute;
-    top: 57px;
+    top: 53px;
     z-index: 100;
     display: flex;
     justify-content: center;
@@ -86,12 +86,12 @@ function SideMenu(){
                                 멘토들의 이야기
                             </Item>
                         </Link>
-                        <Link to="/">
+                        <Link to="/chat">
                             <Item onClick={onClick}>
                                 채팅하기
                             </Item>
                         </Link>
-                        <Link to="/">
+                        <Link to="/mypage">
                             <Item onClick={onClick}>
                                 마이페이지
                             </Item>

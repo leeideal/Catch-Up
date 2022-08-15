@@ -15,7 +15,7 @@ const Background = styled.section`
     height: 370px;
     width: 100%;
     background-color : #F5F5F5;
-    z-index: 2;
+    z-index: 100;
     display: flex;
     flex-direction: column;
     align-items: center;
