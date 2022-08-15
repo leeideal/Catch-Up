@@ -12,7 +12,7 @@ def create_chatroom(request):
     #POST방식일 때 채팅방 생성
     if request.method == 'POST':
         current_post = get_object_or_404(Post, pk=request.data['post_id'])
-        current_user = get_object_or_404(User, id=request.data['user_id'])
+        current_user = request.user
         serializer = ChatroomSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(
@@ -22,9 +22,9 @@ def create_chatroom(request):
             return Response(data=serializer.data)
 
 @api_view(['GET'])
-def list_chatroom(request, user_id):
+def list_chatroom(request):
     if request.method == 'GET':
-        current_user = get_object_or_404(User, id=user_id)
+        current_user = request.user
         chatrooms = Chatroom.objects.all()
         user_chatrooms = []
         for room in chatrooms:
@@ -35,14 +35,14 @@ def list_chatroom(request, user_id):
 
 
 @api_view(['GET', 'POST', 'DELETE'])
-def chatlist_roomdelete(request, user_id, chatroom_id):
+def chatlist_roomdelete(request, chatroom_id):
     room = get_object_or_404(Chatroom, id=chatroom_id)
     if request.method == 'GET':
         chats = Chat.objects.filter(chatroom = room).order_by('created_at')
         serializer = ChatListSerializer(chats, many=True)
         return Response(data=serializer.data)
     elif request.method == 'POST':
-        current_user = get_object_or_404(User, id=user_id)
+        current_user = request.user
         serializer = ChatListSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(
