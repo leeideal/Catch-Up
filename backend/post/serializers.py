@@ -20,7 +20,7 @@ class PostSerializer(serializers.ModelSerializer):
     
     # def get_writer(self, *args, **kwargs):
     #     writer = super(UserSerializer, self).get_fields(*args, **kwargs)
-    writer = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+    # writer = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     reviews = ReviewSerializer(many=True, read_only=True)
 
     class Meta:
@@ -28,6 +28,7 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
 
         fields = (
+            'id',
             'title',
             'writer',
             'content',

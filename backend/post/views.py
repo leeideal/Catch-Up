@@ -37,7 +37,7 @@ def post_detail(request, post_pk):
     elif request.method == 'PATCH':
         serializer = PostSerializer(instance=post, data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(post=post)
         return Response(serializer.data)
     elif request.method == 'DELETE':
         post.delete()
@@ -46,9 +46,19 @@ def post_detail(request, post_pk):
         }
         return Response(data)
 
+
+### Review
+
+# 모든 댓글 보여주기
+@api_view(['GET'])
+def review_list(request):
+    reviews = Review.objects.all()
+    serializer = ReviewSerializer(reviews, many=True)
+    return Response(serializer.data)
+
 @api_view(['GET','POST'])
 def review_create(request, post_pk):
-    post = Post.objects.get(pk=post_pk)
+    post = get_object_or_404(Post, pk=post_pk)
 
     if request.method == 'GET':
         reviews = Review.objects.filter(post=post)
@@ -56,14 +66,14 @@ def review_create(request, post_pk):
         return Response(data=serializer.data)
     
     elif request.method == 'POST':
-        request.data['post'] = post_pk
+        # request.data['post'] = post_pk
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(data=serializer.data)
+            serializer.save(post=post)
+        return Response(data=serializer.data)
 
 @api_view(['GET','PATCH','DELETE'])
-def review_detail(request, review_pk):
+def review_detail(request, post_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)
 
     if request.method == 'GET':
