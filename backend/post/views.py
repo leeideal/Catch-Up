@@ -23,7 +23,7 @@ def post_create(request):
     if request.method == 'POST':
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(writer = get_object_or_404(User, id=request.data['writer']))
+            serializer.save(writer = request.user)
             return Response(data=serializer.data)
 
 
