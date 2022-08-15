@@ -21,7 +21,7 @@ def post_create(request):
         return Response(data=serializer.data)
 
     if request.method == 'POST':
-        serializer = ReviewSerializer(data=request.data)
+        serializer = PostSerializer(data=request.data)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save()
