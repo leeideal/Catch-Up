@@ -12,19 +12,19 @@ def create_chatroom(request):
     #POST방식일 때 채팅방 생성
     if request.method == 'POST':
         current_post = get_object_or_404(Post, pk=request.data['post_id'])
-        current_user = get_object_or_404(User, pk=request.data['user_id'])
+        current_user = get_object_or_404(User, id=request.data['user_id'])
         serializer = ChatroomSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(
                 post = current_post, 
-                questioner = current_post.writer, 
-                answerer = current_user)
+                questioner = current_user,
+                answerer = current_post.writer)
             return Response(data=serializer.data)
 
 @api_view(['GET'])
 def list_chatroom(request, user_id):
     if request.method == 'GET':
-        current_user = get_object_or_404(User, pk=user_id)
+        current_user = get_object_or_404(User, id=user_id)
         chatrooms = Chatroom.objects.all()
         user_chatrooms = []
         for room in chatrooms:
@@ -42,7 +42,7 @@ def chatlist_roomdelete(request, user_id, chatroom_id):
         serializer = ChatListSerializer(chats, many=True)
         return Response(data=serializer.data)
     elif request.method == 'POST':
-        current_user = get_object_or_404(User, pk=user_id)
+        current_user = get_object_or_404(User, id=user_id)
         serializer = ChatListSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(
