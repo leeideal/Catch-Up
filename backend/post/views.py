@@ -21,11 +21,11 @@ def post_create(request):
         return Response(data=serializer.data)
 
     if request.method == 'POST':
-        serializer = ReviewSerializer(data=request.data)
-
+        serializer = PostSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
+            serializer.save(writer = get_object_or_404(User, id=request.data['writer']))
             return Response(data=serializer.data)
+
 
 @api_view(['GET','PATCH','DELETE'])
 def post_detail(request, post_pk):
