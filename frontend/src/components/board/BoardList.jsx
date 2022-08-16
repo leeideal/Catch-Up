@@ -9,11 +9,12 @@ import BoardBox from './BoardBox';
 const Wapper = styled.section`
     max-width: 700px;
     width : 100%; 
+    color: rgb(24,62,78);
 `
 const List = styled.section`
     margin-top: 50px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     padding: 60px 0;
     background-color: rgba(104,220,196);
     display: flex;
@@ -137,10 +138,10 @@ const Overlay = styled(motion.div)`
 `;
 
 const BigBox = styled(motion.div)`
-    width: 80%;
+    width: 90%;
     max-width: 450px;
-    height: 80vh;
-    background-color: white;
+    height: 90vh;
+    background-color: #B3EDE1;
     border-radius: 20px;
     position: relative;
 `
