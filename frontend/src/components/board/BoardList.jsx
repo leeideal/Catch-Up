@@ -138,10 +138,10 @@ const Overlay = styled(motion.div)`
 `;
 
 const BigBox = styled(motion.div)`
-    width: 80%;
+    width: 90%;
     max-width: 450px;
-    height: 80vh;
-    background-color: white;
+    height: 90vh;
+    background-color: #B3EDE1;
     border-radius: 20px;
     position: relative;
 `
