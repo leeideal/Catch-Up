@@ -92,3 +92,20 @@ def review_detail(request, post_pk, review_pk):
             'review':review_pk
         }
         return Response(data)
+
+
+from django.db.models import Q
+
+@api_view(['GET'])
+def post_search(request):
+    posts = Post.objects.all()
+    query = request.GET.get('query', '')
+    if query:
+        posts = posts.filter(
+        Q(title__icontains = query) | #제목
+        Q(content__icontains = query) | #내용
+        Q(sub_content__icontains = query) | #서브내용
+        Q(tag__icontains = query) #태그
+        )
+    serializer = PostSerializer(posts, many=True)
+    return Response(data=serializer.data)
