@@ -8,6 +8,9 @@ from rest_framework.decorators import api_view
 from .models import *
 from .serializers import *
 
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
+
 # user create
 @api_view(['GET', 'POST'])
 def user_list_create(request):
@@ -57,10 +60,10 @@ def user_profile(request, user_id):
         serializer = ProfileSerializer(profile)
         return Response(data=serializer.data)
 
-# profile update
+# myprofile update
 @api_view(['GET', 'PATCH'])
-def profile_update(request, user_id):
-    user = User.objects.get(pk=user_id)
+def profile_update(request):
+    user = request.user
     if request.method == 'GET':
         profile = Profile.objects.get(user=user)
         serializer = ProfileSerializer(profile)
@@ -73,3 +76,12 @@ def profile_update(request, user_id):
         return Response(data=serializer.data)
 
 # user모델이 삭제되면 profile이 자동 삭제됨으로 삭제 구현 X
+
+# myprofile
+@api_view(['GET'])
+def myprofile(request):
+    user = request.user
+    if request.method == 'GET':
+        profile = Profile.objects.get(user=user)
+        serializer = ProfileSerializer(profile)
+        return Response(data=serializer.data)
