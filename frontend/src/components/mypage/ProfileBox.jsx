@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import API from '../../axios';
+import { useState } from 'react';
 
 const Container = styled.section`
     width: ${props => props.theme.mainWidth};
@@ -98,13 +101,28 @@ const FixBtn = styled.button`
 
 
 function ProfileBox () {
+    const [info, setInfo] = useState({});
+    useEffect(() => {
+        const profileInfo = async () => {
+            try{
+                const {data} = await API.get("/users/myprofile/")
+                console.log(data);
+                return data;
+            }catch(error){
+                console.log(error)
+            }
+        }
+        setInfo(profileInfo)
+
+    },[])
+    console.log(info)
     const navigate = useNavigate()
     return (
         <Container>
         <Box>
             <ImgBox>
                 <Prepoto src={"https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927"} />
-                <Name>이상돈</Name>
+                <Name>{info?.nickname}</Name>
                 <NickName>집가고 싶다</NickName>
             </ImgBox>
             <InfoBox>

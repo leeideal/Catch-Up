@@ -121,8 +121,8 @@ function Log() {
 
     const onValid = async(data) => {
         const result = {
-            username: data.id,
-            password: data.pw,
+            "username": data.id,
+            "password": data.pw,
         };
         try{
             const {loginInfo}  = await API.post('/login/', result)
