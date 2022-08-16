@@ -18,7 +18,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     
     writer = serializers.PrimaryKeyRelatedField(read_only=True)
-    # reviews = ReviewSerializer(many=True, read_only=True)
+    reviews = ReviewSerializer(many=True, read_only=True)
 
 
     class Meta:

@@ -1,3 +1,4 @@
+from locale import atoi
 from tracemalloc import get_object_traceback
 from django.shortcuts import render, get_object_or_404
 # Response 추가
@@ -27,12 +28,16 @@ def post_create(request):
             serializer.save(writer = request.user)
             return Response(data=serializer.data)
 
-@api_view(['GET','PATCH','DELETE'])
+@api_view(['GET','PATCH','DELETE','POST'])
 def post_detail(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
     reviews = Review.objects.filter(post=post_pk)
 
+    # Post, Review 가져오기 & 조회수
     if request.method == 'GET':
+        post.view_users += 1
+        post.save()
+
         post_serializer = PostSerializer(post)
         review_serializer = ReviewSerializer(reviews, many=True)
         data = {
@@ -51,7 +56,22 @@ def post_detail(request, post_pk):
             'post':post_pk
         }
         return Response(data)
+    
+    # 좋아요
+    elif request.method == 'POST':
+        if request.user.is_authenticated:
+            if post.like_users.filter(pk=request.user.pk).exists():
+                post.like_users.remove(request.user)
+            else:
+                post.like_users.add(request.user)
 
+            post_serializer = PostSerializer(post)
+            review_serializer = ReviewSerializer(reviews, many=True)
+            data = {
+                "post": post_serializer.data,
+                "reviews": review_serializer.data,
+            }
+            return Response(data)
 
 ### Review
 
