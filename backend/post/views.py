@@ -30,10 +30,16 @@ def post_create(request):
 @api_view(['GET','PATCH','DELETE'])
 def post_detail(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
+    reviews = Review.objects.filter(post=post_pk)
 
     if request.method == 'GET':
-        serializer = PostSerializer(post)
-        return Response(serializer.data)
+        post_serializer = PostSerializer(post)
+        review_serializer = ReviewSerializer(reviews, many=True)
+        data = {
+            "post": post_serializer.data,
+            "reviews": review_serializer.data,
+        }
+        return Response(data)
     elif request.method == 'PATCH':
         serializer = PostSerializer(instance=post, data=request.data)
         if serializer.is_valid():
@@ -59,6 +65,7 @@ def review_list(request):
 @api_view(['GET','POST'])
 def review_create(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
+    writer = request.user
 
     if request.method == 'GET':
         reviews = Review.objects.filter(post=post)
@@ -69,7 +76,7 @@ def review_create(request, post_pk):
         # request.data['post'] = post_pk
         serializer = ReviewSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(post=post)
+            serializer.save(post=post, writer=writer)
         return Response(data=serializer.data)
 
 @api_view(['GET','PATCH','DELETE'])
