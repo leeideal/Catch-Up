@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'users',
     'chat',
 
-    #설치한 라이브러리들
+    # 설치한 라이브러리들
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',
@@ -77,12 +77,6 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
-
-CORS_ORIGIN_WHITELIST = (
-    'https://localhost:3000',
-    'https://localhost:8000',
-    'https://127.0.0.1:8000'
-)
 
 CORS_ORIGIN_ALLOW_ALL = True
 
@@ -159,7 +153,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-MEDIA_URL = '/media/' # 미디어 파일 경로 설정 
+MEDIA_URL = '/media/'  # 미디어 파일 경로 설정
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'users.User'
+
+CORS_ALLOW_CREDENTIALS = True

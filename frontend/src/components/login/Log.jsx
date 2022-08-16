@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdBadge, faLock, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from 'react-router-dom';
+import API from '../../axios';
 
 const Wapper = styled.div`
     width: 100%;
@@ -115,9 +117,20 @@ const SubBtn = styled.button`
 function Log() {
     const {register, handleSubmit} = useForm();
     const [isRe, setIsRe] = useState(false);
+    const navigate = useNavigate();
 
-    const onValid = (data) => {
-        
+    const onValid = async(data) => {
+        const result = {
+            username: data.id,
+            password: data.pw,
+        };
+        try{
+            const {loginInfo}  = await API.post('/login/', result)
+            navigate("/")
+            return loginInfo
+        } catch(error){
+            console.log(error)
+        }
     }
     
     return(
