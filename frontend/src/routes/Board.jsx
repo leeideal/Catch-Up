@@ -22,6 +22,7 @@ const Background = styled.section`
 `
 
 const Title = styled.h1`
+    color: rgb(24,62,78);
     margin-top:40px;
     margin-bottom: 15px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;

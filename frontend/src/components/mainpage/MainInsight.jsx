@@ -15,7 +15,7 @@ const Background = styled.section`
     height: 370px;
     width: 100%;
     background-color : #F5F5F5;
-    z-index: 2;
+    z-index: 100;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -165,9 +165,9 @@ const Overlay = styled(motion.div)`
 `;
 
 const BigBox = styled(motion.div)`
-    width: 80%;
+    width: 90%;
     max-width: 450px;
-    height: 80vh;
+    height: 90vh;
     background-color: white;
     border-radius: 20px;
     position: relative;
