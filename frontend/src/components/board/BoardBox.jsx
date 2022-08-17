@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { isUser } from '../../atoms';
 
 const Container = styled.div`
     width: 100%;
@@ -130,10 +132,16 @@ const Btn = styled.button`
 
 function BoardBox({props}) {
     const navigate = useNavigate()
+    const checkUser = useRecoilValue(isUser);
 
     const onClick = () => {
-        if (window.confirm("이 채팅에 필요한 츄르의 개수는 10개 입니다! \n(채팅 내에서 전화번호, 이메일등의 개인정보 교환은 금지됩니다.)")){
-            navigate("/chat")
+        if(checkUser){
+            if (window.confirm("이 채팅에 필요한 츄르의 개수는 10개 입니다! \n(채팅 내에서 전화번호, 이메일등의 개인정보 교환은 금지됩니다.)")){
+                navigate("/chat")
+            }
+        }else{
+            alert("로그인 이후 사용가능하십니다!");
+            navigate("/login")
         }
     }
     

@@ -4,6 +4,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdBadge, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import API from '../../axios';
+import { setCookie } from '../../cookie';
+import { isUser } from '../../atoms';
+import { useSetRecoilState } from 'recoil';
 
 const Wapper = styled.div`
     width: 100%;
@@ -56,6 +59,7 @@ const SubBtn = styled.button`
 function SignUp() {
     const {register, handleSubmit} = useForm();
     const navigate = useNavigate();
+    const setUser = useSetRecoilState(isUser);
 
     const onValid = async(data) => {
         const result = {
@@ -65,9 +69,18 @@ function SignUp() {
             password2 : data.pw2
         };
         try{
-            const {signupInfo}  = await API.post('/signup/', result)
+            await API.post('/signup/', result).then(
+                response => {
+                    console.log(response);
+                    setCookie('userid', response.data.access_token, {
+                        path : '/',
+                        secure : true,
+                        sameSite:"none",
+                    })
+                }
+            )
+            setUser(true);
             navigate("/mypage/fix")
-            return signupInfo
         } catch(error){
             console.log(error)
         }

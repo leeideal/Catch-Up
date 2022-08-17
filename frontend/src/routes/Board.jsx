@@ -4,6 +4,8 @@ import BoardList from '../components/board/BoardList';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePen } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { isUser } from '../atoms';
 
 const ToCenter = styled.div`
     width:100vw;
@@ -60,6 +62,7 @@ const Write = styled(FontAwesomeIcon)`
 `
 
 function Board() {
+    const user = useRecoilValue(isUser);
     return (
         <ToCenter>
             <Background>
@@ -68,7 +71,7 @@ function Board() {
                 <BoardSearch />
                 <BoardDivider />
                 <BoardList />
-                <Link to="/posting" ><Write icon={faSquarePen} /></Link>
+                {user && <Link to="/posting" ><Write icon={faSquarePen} /></Link>}
             </Background>
         </ToCenter>
     )
