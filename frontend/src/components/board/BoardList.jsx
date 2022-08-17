@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faHeart, faMessage, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faHeart, faEye, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useState, useEffect } from 'react';
@@ -185,17 +185,17 @@ function BoardList(){
 
     return(
         <Wapper>
-            {/* <List>
-                {info.map(prev => (
-                    <BoxWapper layoutId={info?.post.id+""} onClick={() => onBoxClick(info?)} key={prev.id}>
+            <List>
+                {info?.map(prev => (
+                    <BoxWapper layoutId={prev.post.id+""} onClick={() => onBoxClick(prev)} key={prev.post.id}>
                         <Box >
                         <BoxProfile>
-                            <Img src={prev.img} />
-                            <Name>{prev.name}</Name>
+                            <Img src={prev.writer.image ? prev.writer.image : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`} />
+                            <Name>{prev.writer.nickname}</Name>
                         </BoxProfile>
                         <BoxInfo>
-                            <Title>{prev.title}</Title>
-                            <Tags>{prev.category.map(i => <p>{i}</p>)}</Tags>
+                            <Title>{prev.post.title}</Title>
+                            {/* <Tags>{prev.post.tag.map(i => <p>{i}</p>)}</Tags> */}
                             <BoxChatInfo>
                                 <Rate>
                                     <Icon icon={faStar} />
@@ -203,18 +203,18 @@ function BoardList(){
                                 </Rate>
                                 <Like>
                                     <Icon icon={faHeart} />
-                                    <p>{prev.like}</p>
+                                    <p>{prev.post.like_users.length}</p>
                                 </Like>
                                 <ChatNum>
-                                    <Icon icon={faMessage} />
-                                    <p>{prev.link}</p>
+                                    <Icon icon={faEye} />
+                                    <p>{prev.post.view_users}</p>
                                 </ChatNum>
                             </BoxChatInfo>
                         </BoxInfo>
                     </Box>
                     </BoxWapper>
                 ))}
-            </List> */}
+            </List>
 
             {/* 모달창 */}
             <AnimatePresence>{clicked ? 
@@ -223,7 +223,7 @@ function BoardList(){
                             animate={{ opacity: 1 }} 
                             exit={{ opacity: 0 }}
                         >
-                            <BigBox layoutId={clickedInfo?.id+""} >
+                            <BigBox layoutId={clickedInfo?.post.id+""} >
                                 <BoardBox props={clickedInfo}/>
                                 <XMark onClick = {onOverlayClick} icon={faCircleXmark} />
                             </BigBox>
