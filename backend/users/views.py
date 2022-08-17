@@ -56,12 +56,33 @@ def user_rud(request, user_pk):
 @api_view(['GET'])
 def user_profile(request, user_id):
     user = User.objects.get(pk=user_id)
-    if request.user == user:
-        return myprofile(request)
     if request.method == 'GET':
+        rooms = Chatroom.objects.all()
+        room_count = 0
+        for room in rooms:
+            if room.is_user_in_talkers(user):
+                room_count += 1
         profile = Profile.objects.get(user=user)
         serializer = ProfileSerializer(profile)
-        return Response(data=serializer.data)
+
+        target_user_posts = Post.objects.filter(writer=user)
+        sum_rate = 0
+        result_rate = 5
+        review_account = 0
+        for p in target_user_posts:
+            reviews = Review.objects.filter(post=p)
+            for review in reviews:
+                sum_rate += review.rate
+                review_account += 1
+        if review_account > 0:
+            result_rate = round(sum_rate/review_account)        
+
+        data = {
+            "profile": serializer.data,
+            "room_count": room_count,
+            "rate": result_rate
+        }
+        return Response(data)
 
 # myprofile update
 @api_view(['GET', 'PATCH'])
@@ -92,8 +113,21 @@ def myprofile(request):
                 room_count += 1
         profile = Profile.objects.get(user=user)
         serializer = ProfileSerializer(profile)
+        target_user_posts = Post.objects.filter(writer=user)
+        sum_rate = 0
+        result_rate = 5
+        review_account = 0
+        for p in target_user_posts:
+            reviews = Review.objects.filter(post=p)
+            for review in reviews:
+                sum_rate += review.rate
+                review_account += 1
+        if review_account > 0:
+            result_rate = round(sum_rate/review_account)        
+
         data = {
             "profile": serializer.data,
-            'room_count': room_count
+            "room_count": room_count,
+            "rate": result_rate
         }
         return Response(data)
