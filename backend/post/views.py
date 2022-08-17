@@ -9,7 +9,7 @@ from rest_framework.decorators import api_view
 from .models import *
 # serializers에서 Postserializer를 가져옴
 from .serializers import PostSerializer, ReviewSerializer
-
+from users.serializers import *
 # 포스트 리스트 뷰
 import jwt
 
@@ -93,12 +93,11 @@ def review_create(request, post_pk):
         return Response(data=serializer.data)
     
     elif request.method == 'POST':
-        # request.data['post'] = post_pk
-        serializer = ReviewSerializer(data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(post=post, writer=writer)
-        return Response(data=serializer.data)
-
+        review_serializer = ReviewSerializer(data=request.data)
+        if review_serializer.is_valid(raise_exception=True):
+            review_serializer.save(post=post, writer=writer)
+        return Response(data = review_serializer.data)
+        
 @api_view(['GET','PATCH','DELETE'])
 def review_detail(request, post_pk, review_pk):
     review = get_object_or_404(Review, pk=review_pk)

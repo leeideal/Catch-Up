@@ -7,6 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'is_superuser', 'username', 'email')
 
 class ProfileSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(use_url=True)
     class Meta:
         model = Profile
         fields = (
