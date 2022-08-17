@@ -28,19 +28,17 @@ return(
             <Navber />
             <Routes>
                 <Route path="/" element={<Mainpage />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/chat/room/:id/" element={<ChatRoom />} />
                 <Route path="/board" element={<Board />} />
                 <Route path="/posting" element={<Posting />} />
                 <Route path="/how" element={<How />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
-                {/* 마이페이지 */}
                 <Route path="/mypage" element={<Mypage />} />
                 <Route path="/mypage/fix" element={<FixProfile />} />
                 <Route path="/mypage/like" element={<LikeList />} />
                 <Route path="/mypage/preview" element={<PreviewList />} />
-                {/* 채팅페이지 */}
-                <Route path="/chat" element={<Chat />} />
-                <Route path="/chat/room/:id/*" element={<ChatRoom />} />
             </Routes>
             {isMenuClick && <SideMenu />}
         </ThemeProvider>

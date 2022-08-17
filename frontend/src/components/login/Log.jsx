@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdBadge, faLock, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import API from '../../axios';
+import { setCookie } from '../../cookie';
+import { useSetRecoilState } from 'recoil';
+import { isUser } from '../../atoms';
 
 const Wapper = styled.div`
     width: 100%;
@@ -118,6 +121,7 @@ function Log() {
     const {register, handleSubmit} = useForm();
     const [isRe, setIsRe] = useState(false);
     const navigate = useNavigate();
+    const setUser = useSetRecoilState(isUser);
 
     const onValid = async(data) => {
         const result = {
@@ -125,9 +129,18 @@ function Log() {
             "password": data.pw,
         };
         try{
-            const {loginInfo}  = await API.post('/login/', result)
+            await API.post('/login/', result).then(
+                response => {
+                    console.log(response);
+                    setCookie('userid', response.data.access_token, {
+                        path : '/',
+                        secure : true,
+                        sameSite:"none",
+                    })
+                }
+            )
+            setUser(true);
             navigate("/")
-            return loginInfo
         } catch(error){
             console.log(error)
         }

@@ -1,8 +1,9 @@
 import  styled  from 'styled-components';
 import { motion  ,AnimatePresence} from "framer-motion";
 import { useRecoilState } from "recoil";
-import { isMenu } from '../../atoms';
-import { Link } from 'react-router-dom';
+import { isMenu, isUser } from '../../atoms';
+import { Link, useNavigate } from 'react-router-dom';
+import { removeCookie } from '../../cookie';
 
 const Container = styled.div`
     width:100%;
@@ -46,6 +47,7 @@ const Item = styled.div`
     font-weight: 800;
     margin-bottom : 30px;
     opacity : 0.8;
+    cursor: pointer;
 `
 
 const Log = styled.div`
@@ -55,10 +57,49 @@ const Log = styled.div`
     opacity : 1;
 `
 
+const LogOut = styled.div`
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom : 60px;
+    opacity : 1;
+`
+
 function SideMenu(){
     const [isMenuClick ,setisMenuClick] = useRecoilState(isMenu);
+    const [user, setUser] = useRecoilState(isUser);
+    const navigate = useNavigate();
+
+    console.log(user)
+    const onLog = () => {
+        setisMenuClick(prev => !prev);
+    }
+    const onLogout = () => {
+        setUser(false);
+        removeCookie('userid')
+        setisMenuClick(prev => !prev);
+        window.reload();
+    }
     const onClick = () => {
         setisMenuClick(prev => !prev);
+    }
+    const onChat = () => {
+        setisMenuClick(prev => !prev);
+        if (user){
+            navigate("/chat");
+        }else{
+            alert("로그인 이후 사용가능하십니다!")
+            navigate("/login")
+        }
+    }
+    const onMypage = () => {
+        setisMenuClick(prev => !prev);
+        if (user){
+            navigate("/mypage")
+        }else{
+            alert("로그인 이후 사용가능하십니다!")
+            navigate("/login")
+        }
+
     }
 
     return(
@@ -66,11 +107,15 @@ function SideMenu(){
             <AnimatePresence>
                 {isMenuClick && (<Wapper variants={sideMenuVars} initial="start" animate="end" exit={{ scale: 0 }}>
                     <MList>
-                        <Link to="/login">
-                            <Log onClick={onClick}>
+                        {
+                            user ? <Link to="/">
+                                <LogOut onClick={onLogout}>로그아웃</LogOut> 
+                            </Link>: <Link to="/login">
+                            <Log onClick={onLog}>
                                 로그인
                             </Log>
                         </Link>
+                        }
                         <Link to="/about">
                             <Item onClick={onClick}>
                                 CATUP 소개
@@ -86,16 +131,12 @@ function SideMenu(){
                                 멘토들의 이야기
                             </Item>
                         </Link>
-                        <Link to="/chat">
-                            <Item onClick={onClick}>
-                                채팅하기
-                            </Item>
-                        </Link>
-                        <Link to="/mypage">
-                            <Item onClick={onClick}>
-                                마이페이지
-                            </Item>
-                        </Link>
+                        <Item onClick={onChat}>
+                            채팅하기
+                        </Item>
+                        <Item onClick={onMypage}>
+                            마이페이지
+                        </Item>
                     </MList>
                 </Wapper>)}
                 </AnimatePresence>
