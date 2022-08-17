@@ -13,7 +13,7 @@ class Post(models.Model):
     sub_content  = models.TextField(null=True)
     like_users = models.ManyToManyField(User, related_name='likes_user', blank=True)
     view_users = models.IntegerField(default=0)
-    # chur = # 츄르 모델 참조
+    coin = models.IntegerField(default=0)
     tag = models.CharField(max_length=20, null=True, blank=True)
 
 
