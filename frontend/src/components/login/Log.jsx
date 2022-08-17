@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdBadge, faLock, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
-import API from '../../axios';
 import { setCookie } from '../../cookie';
 import { useSetRecoilState } from 'recoil';
 import { isUser } from '../../atoms';
+import { API } from '../../axios';
 
 const Wapper = styled.div`
     width: 100%;

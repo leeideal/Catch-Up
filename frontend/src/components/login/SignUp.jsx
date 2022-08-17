@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdBadge, faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
-import API from '../../axios';
+import {API} from '../../axios';
 import { setCookie } from '../../cookie';
 import { isUser } from '../../atoms';
 import { useSetRecoilState } from 'recoil';

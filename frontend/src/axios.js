@@ -1,7 +1,7 @@
 import axios from "axios";
 import { getCookie } from "./cookie";
 
-const API = axios.create({
+export const API = axios.create({
     baseURL: "http://127.0.0.1:8000",
     headers:{
         "Content-Type": "application/json",
@@ -9,7 +9,7 @@ const API = axios.create({
     withCredentials : true,
 });
 
-const LogAPI = axios.create({
+export const LogAPI = axios.create({
     baseURL: "http://127.0.0.1:8000",
     headers:{
         "Content-Type": "application/json",
@@ -17,5 +17,3 @@ const LogAPI = axios.create({
     },
     withCredentials : true,
 });
-
-export default API;
