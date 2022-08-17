@@ -132,6 +132,9 @@ function FixProfileBox () {
       }
     
     const onValid = async (data) => {
+        if(poto == null){
+            setPoto("https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927")
+        }
         const newData = {
             "nickname" : data.nickname,
             "introduction" : data.intro,

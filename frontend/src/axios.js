@@ -6,7 +6,6 @@ export const API = axios.create({
     headers:{
         "Content-Type": "application/json",
     },
-    withCredentials : true,
 });
 
 export const LogAPI = axios.create({
@@ -15,5 +14,4 @@ export const LogAPI = axios.create({
         "Content-Type": "application/json",
         Authorization: `${getCookie('userid')}`
     },
-    withCredentials : true,
 });
