@@ -16,6 +16,7 @@ import Chat from './routes/Chat';
 import FixProfile from './components/mypage/FixProfile';
 import LikeList from './components/mypage/LikeList';
 import PreviewList from './components/mypage/PreviewList';
+import ChatRoom from "./components/chating/ChatRoom";
 
 function Routers(){
 // 메뉴바 클린 check State
@@ -32,11 +33,14 @@ return(
                 <Route path="/how" element={<How />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
+                {/* 마이페이지 */}
                 <Route path="/mypage" element={<Mypage />} />
                 <Route path="/mypage/fix" element={<FixProfile />} />
                 <Route path="/mypage/like" element={<LikeList />} />
                 <Route path="/mypage/preview" element={<PreviewList />} />
+                {/* 채팅페이지 */}
                 <Route path="/chat" element={<Chat />} />
+                <Route path="/chat/room/:id/*" element={<ChatRoom />} />
             </Routes>
             {isMenuClick && <SideMenu />}
         </ThemeProvider>
