@@ -11,7 +11,7 @@ from .models import *
 from .serializers import PostSerializer, ReviewSerializer
 
 # 포스트 리스트 뷰
-
+import jwt
 
 @api_view(['GET', 'POST'])
 def post_create(request):
