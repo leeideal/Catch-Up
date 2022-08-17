@@ -56,8 +56,8 @@ const BoardDivider = styled.div`
 const Write = styled(FontAwesomeIcon)`
     position: fixed;
     font-size: 50px;
-    bottom : 30px;
-    right: 30px;
+    bottom : 10%;
+    right: 10%;
     cursor: pointer;
 `
 
