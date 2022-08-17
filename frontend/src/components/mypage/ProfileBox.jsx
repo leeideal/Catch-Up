@@ -120,7 +120,7 @@ function ProfileBox () {
         <Container>
         <Box>
             <ImgBox>
-                <Prepoto src={info?.profile.image ? info?.image : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`}/>
+                <Prepoto src={info?.profile.image ? info?.profile.image : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`}/>
                 <Name>{info?.profile.nickname}</Name>
                 <NickName>Basic</NickName>
             </ImgBox>
@@ -138,7 +138,7 @@ function ProfileBox () {
                         Star
                     </ItemTitle>
                     <ItemBody>
-                        {info?.profile.star}/5
+                        {info?.rate}/5
                     </ItemBody>
                 </InfoItem>
                 <InfoItem>
