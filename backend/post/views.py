@@ -35,10 +35,16 @@ def post_create(request):
                     review_account += 1
             if review_account > 0:
                 result_rate = round(sum_rate/review_account)
-
-
+            
+            result_taglist=[]
+            if post.tag != None:
+                tag_list = post.tag.split('#')
+                for tag in tag_list:
+                    if len(tag)>0:
+                        result_taglist.append('#'+tag)
             post_writer_set = {
                 "post":post_serializer.data,
+                "tag":result_taglist,
                 "writer":profile_serializer.data,
                 "rate":result_rate
             }
@@ -56,7 +62,7 @@ def post_create(request):
         tagstr = ''
         for tag in taglist:
             tagstr += tag
-        tagstr.strip()
+        tagstr.strip("/")
         coin = int(request.data['coin'])
         if serializer.is_valid(raise_exception=True):
             serializer.save(writer = request.user, tag=tagstr, coin=coin)
