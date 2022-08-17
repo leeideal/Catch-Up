@@ -84,6 +84,8 @@ def user_profile(request, user_id):
         }
         return Response(data)
 
+import base64
+from django.conf import settings
 # myprofile update
 @api_view(['GET', 'PATCH'])
 def profile_update(request):
@@ -94,6 +96,7 @@ def profile_update(request):
         return Response(data=serializer.data)
     elif request.method == 'PATCH':
         profile = Profile.objects.get(user=user)
+        
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
