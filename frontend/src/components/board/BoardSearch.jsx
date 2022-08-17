@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Wapper = styled.section`
     width: ${props => props.theme.mainWidth};
@@ -45,6 +45,12 @@ function BoardSearch() {
         setValue(e.target.value);
         navigator(`/board?q=${e.target.value}`)
     }
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+    }
+    let query = useQuery();
+    const searchTerm = query.get("q");
+    console.log(searchTerm)
     return (
         <Wapper>
             <Search>
