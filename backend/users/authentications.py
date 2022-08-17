@@ -12,14 +12,13 @@ from .models import User
 class JWTAuthentication(authentication.BaseAuthentication):
     def authenticate(self, request):
         access_token = request.headers.get("Authorization") or request.COOKIES.get("access_token")
-        print(access_token)
         if not access_token:
             return None
         return self.authenticate_credentials(access_token)
 
     def authenticate_credentials(self, token):
-        #if isinstance(token, bytes):
-            #token = token.decode("ascii")
+        if isinstance(token, bytes):
+            token = token.decode("ascii")
         try:
             data = jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
             user_id = data["user_id"]
@@ -36,7 +35,6 @@ class JWTAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed("Invalid Token, AttributeError")
         except User.DoesNotExist:
             raise exceptions.AuthenticationFailed("No such user")
-
         '''if expired_at:
             expired_at = datetime.strptime(expired_at, "%Y-%m-%d %H:%M:%S")
             if datetime.now() >= expired_at:
