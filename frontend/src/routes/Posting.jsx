@@ -14,7 +14,7 @@ const Background = styled.section`
     background-color: ${props => props.theme.mainBackColor};
     max-width: 700px;
     width : 100%; 
-    margin-top: 1px;
+    margin-top: 3px;
     display: flex;
     flex-direction: column;
     align-items: center;

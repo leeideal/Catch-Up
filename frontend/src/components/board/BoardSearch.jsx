@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import {useForm} from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Wapper = styled.section`
     width: ${props => props.theme.mainWidth};
@@ -38,19 +39,21 @@ const InputIcon = styled(FontAwesomeIcon)`
 
 
 function BoardSearch() {
-    const {register, handleSubmit} = useForm();
-    const onValid = (data) => {
-        console.log(data);
+    const [value, setValue] = useState("")
+    const navigator = useNavigate();
+    const handleChange = (e) => {
+        setValue(e.target.value);
+        navigator(`/board?q=${e.target.value}`)
     }
-
     return (
         <Wapper>
             <Search>
-                <Form onSubmit={handleSubmit(onValid)}>
+                <Form>
                     <InputIcon icon={faMagnifyingGlass}/>
-                    <Input {...register("search", {required : true})}
-                            placeholder = "제목, 내용, 해시태그 검색" >
-                            </Input>
+                    <Input 
+                        value={value} onChange={handleChange} 
+                        placeholder = "제목, 내용, 해시태그 검색" >
+                    </Input>
                 </Form>
             </Search>
         </Wapper>
