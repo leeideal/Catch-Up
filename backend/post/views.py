@@ -18,8 +18,18 @@ def post_create(request):
     # GET 방식을 받아왔을 때
     if request.method == 'GET':
         posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return Response(data=serializer.data)
+        data = []
+        for post in posts:
+            profile = get_object_or_404(Profile, user=post.writer)
+            post_serializer = PostSerializer(post)
+            profile_serializer = ProfileSerializer(profile)
+            post_writer_set = {
+                "post":post_serializer.data,
+                "writer":profile_serializer.data
+            }
+            data.append(post_writer_set)
+
+        return Response(data=data)
 
     if request.method == 'POST':
         data = {
