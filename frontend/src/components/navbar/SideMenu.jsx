@@ -13,7 +13,7 @@ const Container = styled.div`
 
 const Wapper = styled(motion.div)`
     background: white;
-    max-width: 700px;
+    max-width: 800px;
     width : 100%; 
     height: 2600px; // 나중에 높이에 따라서 바꿔야 하는 설정!!
     position: absolute;
