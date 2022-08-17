@@ -120,8 +120,8 @@ function ProfileBox () {
         <Container>
         <Box>
             <ImgBox>
-                <Prepoto src={info?.image ? info?.image : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`}/>
-                <Name>{info?.nickname}</Name>
+                <Prepoto src={info?.profile.image ? info?.image : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`}/>
+                <Name>{info?.profile.nickname}</Name>
                 <NickName>Basic</NickName>
             </ImgBox>
             <InfoBox>
@@ -130,7 +130,7 @@ function ProfileBox () {
                         Chur
                     </ItemTitle>
                     <ItemBody>
-                        {info?.coin}
+                        {info?.profile.coin}
                     </ItemBody>
                 </InfoItem>
                 <InfoItem>
@@ -138,7 +138,7 @@ function ProfileBox () {
                         Star
                     </ItemTitle>
                     <ItemBody>
-                        {info?.star}/5
+                        {info?.profile.star}/5
                     </ItemBody>
                 </InfoItem>
                 <InfoItem>
@@ -146,7 +146,7 @@ function ProfileBox () {
                         Chat
                     </ItemTitle>
                     <ItemBody>
-                        2
+                        {info?.room_count}
                     </ItemBody>
                 </InfoItem>
             </InfoBox>
@@ -155,7 +155,7 @@ function ProfileBox () {
                     한줄 소개
                 </IntroTitle>
                 <IntroBody>
-                    {info?.introduction}
+                    {info?.profile.introduction}
                 </IntroBody>
             </IntroBox>
         </Box>
