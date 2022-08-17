@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import API from '../../axios';
 import { useState } from 'react';
+import { LogAPI } from '../../axios';
 
 const Container = styled.section`
     width: ${props => props.theme.mainWidth};
@@ -105,7 +105,7 @@ function ProfileBox () {
     const navigate = useNavigate()
     useEffect(async() => {
         try{
-            const data = await API.get("/users/myprofile/")
+            const data = await LogAPI.get("/users/myprofile/")
             setInfo(data)
         }catch(error){
             console.log(error)
