@@ -64,12 +64,14 @@ const Img = styled.img`
 `
 
 const Name = styled.p`
-    font-size: 14px;
+    font-size: 13px;
+    opacity: 0.7;
+    font-weight: 600;
     text-align: center;
 `
 const Title = styled.p`
-    font-size: 21px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
     line-height: 1.2;
 `
 
@@ -195,7 +197,7 @@ function BoardList(){
                         </BoxProfile>
                         <BoxInfo>
                             <Title>{prev.post.title}</Title>
-                            {/* <Tags>{prev.post.tag.map(i => <p>{i}</p>)}</Tags> */}
+                            <Tags>{prev.tag.map(i => <p>{i}</p>)}</Tags>
                             <BoxChatInfo>
                                 <Rate>
                                     <Icon icon={faStar} />
