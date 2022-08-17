@@ -131,7 +131,6 @@ function Log() {
         try{
             await API.post('/login/', result).then(
                 response => {
-                    console.log(response);
                     setCookie('userid', response.data.access_token, {
                         path : '/',
                         secure : true,

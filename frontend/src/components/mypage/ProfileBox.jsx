@@ -103,13 +103,16 @@ const FixBtn = styled.button`
 function ProfileBox () {
     const [info, setInfo] = useState()
     const navigate = useNavigate()
-    useEffect(async() => {
+    const getProfile = async() => {
         try{
             const data = await LogAPI.get("/users/myprofile/")
-            setInfo(data)
+            setInfo(data.data)
         }catch(error){
             console.log(error)
         }
+    }
+    useEffect(() => {
+        getProfile()
     },[])
     console.log(info)
 
@@ -117,9 +120,9 @@ function ProfileBox () {
         <Container>
         <Box>
             <ImgBox>
-                <Prepoto src={"https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927"} />
+                <Prepoto src={info?.image ? info?.image : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`}/>
                 <Name>{info?.nickname}</Name>
-                <NickName>집가고 싶다</NickName>
+                <NickName>Basic</NickName>
             </ImgBox>
             <InfoBox>
                 <InfoItem>
@@ -127,7 +130,7 @@ function ProfileBox () {
                         Chur
                     </ItemTitle>
                     <ItemBody>
-                        50
+                        {info?.coin}
                     </ItemBody>
                 </InfoItem>
                 <InfoItem>
@@ -135,7 +138,7 @@ function ProfileBox () {
                         Star
                     </ItemTitle>
                     <ItemBody>
-                        4.8/5
+                        {info?.star}/5
                     </ItemBody>
                 </InfoItem>
                 <InfoItem>
@@ -152,7 +155,7 @@ function ProfileBox () {
                     한줄 소개
                 </IntroTitle>
                 <IntroBody>
-                    안녕하세요!! 집에 매우 몹시 가고싶은 이상돈입니다!! 채팅은 사절하니 연락 노노하세요~
+                    {info?.introduction}
                 </IntroBody>
             </IntroBox>
         </Box>

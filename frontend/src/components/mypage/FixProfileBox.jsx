@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePen } from "@fortawesome/free-solid-svg-icons";
+import { LogAPI } from '../../axios';
+import { useEffect, useState } from 'react';
 
 const Container = styled.form`
     width: ${props => props.theme.mainWidth};
@@ -81,8 +83,21 @@ const TextInput = styled.textarea`
 
 
 function FixProfileBox () {
+    const [info, setInfo] = useState()
     const navigate = useNavigate()
     const {register,  handleSubmit} = useForm();
+    const getProfile = async() => {
+        try{
+            const data = await LogAPI.get("/users/myprofile/")
+            setInfo(data.data)
+        }catch(error){
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        getProfile()
+    },[])
+
     const onValid = async (data) => {
         
     } 
@@ -95,11 +110,11 @@ function FixProfileBox () {
                 </ProfilePoto>
                 <FixItem>
                     <FixTitle>닉네임</FixTitle>
-                    <FixInput value={"집가고싶다"} {...register("nickname" , {required : true,})} placeholder="닉네임을 입력하세요!" />
+                    <FixInput value={info?.nickname ? info?.nickname : undefined} {...register("nickname" , {required : true,})} placeholder="닉네임을 입력하세요!" />
                 </FixItem>
                 <FixItem>
                     <FixTitle>한줄소개</FixTitle>
-                    <TextInput value={"안녕하세요!! 집에 매우 몹시 가고싶은 이상돈입니다!! 채팅은 사절하니 연락 노노하세요~"} 
+                    <TextInput value={info?.introduction ? info?.introduction : undefined} 
                     {...register("intro" , {required : true,})} placeholder="자신을 소개해주세요!"/>
                 </FixItem>
             </Box>
