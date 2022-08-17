@@ -5,7 +5,15 @@ const API = axios.create({
     baseURL: "http://127.0.0.1:8000",
     headers:{
         "Content-Type": "application/json",
-        Authorization: `Bearer ${getCookie('userid')}`
+    },
+    withCredentials : true,
+});
+
+const LogAPI = axios.create({
+    baseURL: "http://127.0.0.1:8000",
+    headers:{
+        "Content-Type": "application/json",
+        Authorization: `${getCookie('userid')}`
     },
     withCredentials : true,
 });
