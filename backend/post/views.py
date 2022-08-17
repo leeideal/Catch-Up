@@ -22,10 +22,19 @@ def post_create(request):
         return Response(data=serializer.data)
 
     if request.method == 'POST':
-        serializer = PostSerializer(data=request.data)
-
+        data = {
+            "title":request.data['title'],
+            "content":request.data['content']
+        }
+        serializer = PostSerializer(data=data)
+        taglist = request.data['tag']
+        tagstr = ''
+        for tag in taglist:
+            tagstr += tag
+        tagstr.strip()
+        coin = int(request.data['coin'])
         if serializer.is_valid(raise_exception=True):
-            serializer.save(writer = request.user)
+            serializer.save(writer = request.user, tag=tagstr, coin=coin)
             return Response(data=serializer.data)
 
 @api_view(['GET','PATCH','DELETE','POST'])

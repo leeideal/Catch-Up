@@ -36,5 +36,6 @@ class PostSerializer(serializers.ModelSerializer):
             'like_users',
             'view_users',
             'tag',
-            'reviews'
+            'reviews',
+            'coin',
         )
