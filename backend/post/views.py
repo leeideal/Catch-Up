@@ -23,9 +23,24 @@ def post_create(request):
             profile = get_object_or_404(Profile, user=post.writer)
             post_serializer = PostSerializer(post)
             profile_serializer = ProfileSerializer(profile)
+            
+            target_user_posts = Post.objects.filter(writer=post.writer)
+            sum_rate = 0
+            result_rate = 5
+            review_account = 0
+            for p in target_user_posts:
+                reviews = Review.objects.filter(post=p)
+                for review in reviews:
+                    sum_rate += review.rate
+                    review_account += 1
+            if review_account > 0:
+                result_rate = round(sum_rate/review_account)
+
+
             post_writer_set = {
                 "post":post_serializer.data,
-                "writer":profile_serializer.data
+                "writer":profile_serializer.data,
+                "rate":result_rate
             }
             data.append(post_writer_set)
 
@@ -152,5 +167,30 @@ def post_search(request):
         Q(sub_content__icontains = query) | #서브내용
         Q(tag__icontains = query) #태그
         )
-    serializer = PostSerializer(posts, many=True)
-    return Response(data=serializer.data)
+        data = []
+    for post in posts:
+        profile = get_object_or_404(Profile, user=post.writer)
+        post_serializer = PostSerializer(post)
+        profile_serializer = ProfileSerializer(profile)
+        target_user_posts = Post.objects.filter(writer=post.writer)
+        sum_rate = 0
+        result_rate = 5
+        review_account = 0
+        for p in target_user_posts:
+            reviews = Review.objects.filter(post=p)
+            for review in reviews:
+                sum_rate += review.rate
+                review_account += 1
+        if review_account > 0:
+            result_rate = round(sum_rate/review_account)
+
+
+        post_writer_set = {
+            "post":post_serializer.data,
+            "writer":profile_serializer.data,
+            "rate":result_rate
+        }
+        data.append(post_writer_set)
+
+    return Response(data=data)
+    

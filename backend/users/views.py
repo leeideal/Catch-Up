@@ -75,7 +75,7 @@ def user_profile(request, user_id):
                 sum_rate += review.rate
                 review_account += 1
         if review_account > 0:
-            result_rate = round(sum_rate/review_account)        
+            result_rate = round(sum_rate/review_account)
 
         data = {
             "profile": serializer.data,
