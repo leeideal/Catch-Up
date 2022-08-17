@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import *
+from chat.models import *
 from .serializers import *
 
 from rest_framework.decorators import permission_classes
@@ -55,6 +56,8 @@ def user_rud(request, user_pk):
 @api_view(['GET'])
 def user_profile(request, user_id):
     user = User.objects.get(pk=user_id)
+    if request.user == user:
+        return myprofile(request)
     if request.method == 'GET':
         profile = Profile.objects.get(user=user)
         serializer = ProfileSerializer(profile)
@@ -82,6 +85,15 @@ def profile_update(request):
 def myprofile(request):
     user = request.user
     if request.method == 'GET':
+        rooms = Chatroom.objects.all()
+        room_count = 0
+        for room in rooms:
+            if room.is_user_in_talkers(user):
+                room_count += 1
         profile = Profile.objects.get(user=user)
         serializer = ProfileSerializer(profile)
-        return Response(data=serializer.data)
+        data = {
+            "profile": serializer.data,
+            'room_count': room_count
+        }
+        return Response(data)
