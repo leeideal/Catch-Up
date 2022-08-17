@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faHeart, faMessage, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BoardBox from './BoardBox';
+import { LogAPI } from '../../axios';
 
 const Wapper = styled.section`
     max-width: 700px;
@@ -154,48 +155,10 @@ const XMark = styled(FontAwesomeIcon)`
     cursor: pointer;
 `
 
-
-// BigBox
-
-
-
-
-const InsightInfo = [
-    {
-        img : "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80",
-        category : ["#공대생", "#IT", "#네카라쿠배", "#클라우드", "#네카라쿠배 면접꿀팁", "#AWS", "#개발자 자기소개서"],
-        title : "정통 3.03의 네카라쿠배 클라우드 최종합격 후기",
-        like : 20,
-        link : 8,
-        rate : 4.4,
-        name : "네카라쿠데타",
-        id: 1
-    },
-    {
-        img : "https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=798&q=80",
-        category : ["#마케팅", "#국문과취업", "#글쓰기"],
-        title : "글빨로 TvN 합격한 썰",
-        like : 10,
-        link : 4,
-        rate : 4.8,
-        name : "오잉",
-        id : 2
-    },
-    {
-        img : "https://images.unsplash.com/photo-1557862921-37829c790f19?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80",
-        category : ["#어학연수", "#미국", "#세관면접 팁", "#미국 동부", "#영어", "#미국 어학연수 추천코스", "여행코스도 추천 가능"],
-        title : "보스턴대학교 2달 어학연수 후기",
-        like : 9,
-        link : 2,
-        rate : 5.0,
-        name : "미국병",
-        id : 3
-    },
-]
-
 function BoardList(){
     const [clicked, setClicked] = useState(false);
     const [clickedInfo, setClickedInfo] = useState([]);
+    const [info, setInfo] = useState([])
 
     const onBoxClick = (i) => {
         setClicked(prev => !prev);
@@ -206,11 +169,25 @@ function BoardList(){
         setClicked(prev => !prev);
     }
 
+    const getList = async() => {
+        try{
+            const data = await LogAPI.get("/posts/")
+            setInfo(data.data)
+        }catch(error){
+            console.log(error)
+        }
+    }
+    console.log(info)
+
+    useEffect(()=> {
+        getList()
+    },[])
+
     return(
         <Wapper>
-            <List>
-                {InsightInfo.map(prev => (
-                    <BoxWapper layoutId={prev.id+""} onClick={() => onBoxClick(prev)} key={prev.id}>
+            {/* <List>
+                {info.map(prev => (
+                    <BoxWapper layoutId={info?.post.id+""} onClick={() => onBoxClick(info?)} key={prev.id}>
                         <Box >
                         <BoxProfile>
                             <Img src={prev.img} />
@@ -237,7 +214,7 @@ function BoardList(){
                     </Box>
                     </BoxWapper>
                 ))}
-            </List>
+            </List> */}
 
             {/* 모달창 */}
             <AnimatePresence>{clicked ? 
