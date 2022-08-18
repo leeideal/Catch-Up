@@ -301,7 +301,6 @@ function BoardSearch() {
     useEffect(() => {
         onSeacrh()
     },[clicked])
-    console.log(info === [])
 
     return(
         <ToCenter>
