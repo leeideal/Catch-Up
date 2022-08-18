@@ -1,11 +1,46 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faHeart, faEye, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faHeart, faEye, faCircleXmark , faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import BoardBox from './BoardBox';
 import { LogAPI } from '../../axios';
+
+const SearchWapper = styled.section`
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
+`
+
+const SearchSession = styled.section`
+    width:100%;
+    margin-bottom: 40px;
+`
+
+const SearchForm = styled.form`
+    width:100%;
+    position: relative;
+`
+
+const SearchInput = styled.input`
+    width:100%;
+    height: 45px;
+    font-size: 22px;
+    padding-left: 42px;
+    border : none;
+    border-radius: 15px;
+    background-color: #F5F5F5;
+`
+
+const SearchInputIcon = styled(FontAwesomeIcon)`
+    position: absolute;
+    bottom : 9px;
+    left: 8px;
+    font-size: 27px;
+`
+
+
 
 const Wapper = styled.section`
     max-width: 700px;
@@ -157,10 +192,38 @@ const XMark = styled(FontAwesomeIcon)`
     cursor: pointer;
 `
 
+const BoardDivider = styled.div`
+    max-width: 700px;
+    width : 100%; 
+    height: 3px;
+    border-radius: 4px;
+    background-color: black;
+`
+
 function BoardList(){
     const [clicked, setClicked] = useState(false);
     const [clickedInfo, setClickedInfo] = useState([]);
     const [info, setInfo] = useState([])
+    const [value, setValue] = useState("")
+    const navigator = useNavigate();
+    const handleChange = (e) => {
+        setValue(e.target.value);
+        navigator(`/board?q=${e.target.value}`)
+    }
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search);
+    }
+    let query = useQuery();
+    const searchTerm = query.get("q");
+
+    const getSearch = async() => {
+        try{
+            const data = await LogAPI.get(`/posts/search/${searchTerm}/`)
+            setInfo(data.data)
+        }catch(error){
+            console.log(error)
+        }
+    }
 
     const onBoxClick = (i) => {
         setClicked(prev => !prev);
@@ -181,11 +244,28 @@ function BoardList(){
     }
     console.log(info)
 
-    useEffect(()=> {
+    useEffect(() => {
+        getSearch()
+    },[searchTerm])
+
+    useEffect(() => {
         getList()
     },[])
 
     return(
+        <>
+        <SearchWapper>
+            <SearchSession>
+                <SearchForm>
+                    <SearchInputIcon icon={faMagnifyingGlass}/>
+                    <SearchInput 
+                        value={value} onChange={handleChange} 
+                        placeholder = "제목, 내용, 해시태그 검색" >
+                    </SearchInput>
+                </SearchForm>
+            </SearchSession>
+        </SearchWapper>
+        <BoardDivider />
         <Wapper>
             <List>
                 {info?.map(prev => (
@@ -231,7 +311,7 @@ function BoardList(){
                             </BigBox>
                         </Overlay> : null}
             </AnimatePresence>
-        </Wapper>
+        </Wapper></>
     );
 }
 
