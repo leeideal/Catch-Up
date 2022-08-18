@@ -54,14 +54,16 @@ def list_chatroom(request):
                 partner_user = room.opponent(current_user)
                 partner_profile = get_object_or_404(Profile, user=partner_user)
                 opponent_profile_serializer = ProfileSerializer(partner_profile)
-                #가장 최근 채팅 정보
-                chat = Chat.objects.last(chatroom=room)
-                chat_serializer = ChatListSerializer(chat)
                 room_chat_set = {
                     "room":roomserializer.data,
-                    "opponent":opponent_profile_serializer.data,
-                    "last_chat":chat_serializer.data
+                    "opponent":opponent_profile_serializer.data
                 }
+                #가장 최근 채팅 정보
+                if Chat.objects.filter(chatroom=room):
+                    chat = Chat.objects.filter(chatroom=room)
+                    chat = chat.last()
+                    chat_serializer = ChatListSerializer(chat)
+                    room_chat_set['last_chat'] = chat_serializer.data
                 data.append(room_chat_set)
         return Response(data=data)
 
@@ -69,6 +71,7 @@ def list_chatroom(request):
 @api_view(['GET', 'POST', 'DELETE'])
 def chatlist_roomdelete(request, chatroom_id):
     room = get_object_or_404(Chatroom, id=chatroom_id)
+    current_user = request.user
     if request.method == 'GET':
         chats = Chat.objects.filter(chatroom = room).order_by('created_at')
         chat_list_serializer = ChatListSerializer(chats, many=True)
@@ -82,7 +85,6 @@ def chatlist_roomdelete(request, chatroom_id):
         }
         return Response(data=data)
     elif request.method == 'POST':
-        current_user = request.user
         serializer = ChatListSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(
