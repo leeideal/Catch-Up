@@ -10,10 +10,9 @@ class Post(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
-    sub_content  = models.TextField(null=True)
     like_users = models.ManyToManyField(User, related_name='likes_user', blank=True)
     view_users = models.IntegerField(default=0)
-    coin = models.IntegerField(default=0)
+    churu = models.IntegerField(default=0)
     tag = models.CharField(max_length=20, null=True, blank=True)
 
 

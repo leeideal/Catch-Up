@@ -32,10 +32,9 @@ class PostSerializer(serializers.ModelSerializer):
             'content',
             'created_at',
             'updated_at',
-            'sub_content',
             'like_users',
             'view_users',
             'tag',
             'reviews',
-            'coin',
+            'churu',
         )
