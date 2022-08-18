@@ -22,7 +22,7 @@ class JWTAuthentication(authentication.BaseAuthentication):
     def authenticate_credentials(self, token):
         # if isinstance(token, bytes):
         #     token = token.decode("ascii")
-        print(token)
+        # print(token)
         try:
             data = jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
             user_id = data["user_id"]

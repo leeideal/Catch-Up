@@ -1,4 +1,6 @@
 from rest_framework import serializers
+
+from post.serializers import PostSerializer
 from .models import *
 
 #base64 serializer
@@ -11,6 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
 
+    post_user_like = PostSerializer(many=True, read_only=True)
     class Meta:
         model = Profile
         fields = (
@@ -18,7 +21,8 @@ class ProfileSerializer(serializers.ModelSerializer):
             'nickname', 
             'introduction', 
             'image',
-            'churu', 
+            'churu',
+            'post_user_like',
             )
 
 class ChuruSerializer(serializers.ModelSerializer):

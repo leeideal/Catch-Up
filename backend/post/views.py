@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 
 from .models import *
 # serializers에서 Postserializer를 가져옴
-from .serializers import PostSerializer, ReviewSerializer
+from .serializers import EventSerializer, PostSerializer, ReviewSerializer
 from users.serializers import *
 # 포스트 리스트 뷰
 import jwt
@@ -170,18 +170,17 @@ def review_detail(request, post_pk, review_pk):
 
 from django.db.models import Q
 
-@api_view(['GET'])
+@api_view(['POST'])
 def post_search(request):
     posts = Post.objects.all()
-    query = request.GET.get('query', '')
-    if query:
+    query = request.data['query']
+    if query != '':
         posts = posts.filter(
         Q(title__icontains = query) | #제목
         Q(content__icontains = query) | #내용
-        Q(sub_content__icontains = query) | #서브내용
         Q(tag__icontains = query) #태그
         )
-        data = []
+    data = []
     for post in posts:
         profile = get_object_or_404(Profile, user=post.writer)
         post_serializer = PostSerializer(post)
@@ -208,7 +207,6 @@ def post_search(request):
                 is_user = 1
             else :
                 is_user = 0
-            
             post_writer_set = {
                 "post":post_serializer.data,
                 "tag":result_taglist,
@@ -217,8 +215,8 @@ def post_search(request):
                 "is_user":is_user
             }
         data.append(post_writer_set)
-
     return Response(data=data)
+<<<<<<< HEAD
 
 # 개발자 
 @api_view(['GET'])
@@ -402,3 +400,13 @@ def post_marketing(request):
             data.append(post_writer_set)
 
     return Response(data=data)
+=======
+    
+
+## Event
+@api_view(['GET'])
+def event_list(request):
+    events = Event.objects.all()
+    serializer = EventSerializer(events, many=True)
+    return Response(serializer.data)
+>>>>>>> 8deef4ddbf04ebd43369b0575a0538ba15bd9f01

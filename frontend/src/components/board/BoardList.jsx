@@ -1,11 +1,46 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faHeart, faEye, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faStar, faHeart, faEye, faCircleXmark , faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
-
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import BoardBox from './BoardBox';
 import { LogAPI } from '../../axios';
+import { useForm } from 'react-hook-form';
+
+const SearchWapper = styled.section`
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
+`
+
+const SearchSession = styled.section`
+    width:100%;
+    margin-bottom: 40px;
+`
+
+const SearchForm = styled.form`
+    width:100%;
+    position: relative;
+`
+
+const SearchInput = styled.input`
+    width:100%;
+    height: 45px;
+    font-size: 22px;
+    padding-left: 42px;
+    border : none;
+    border-radius: 15px;
+    background-color: #F5F5F5;
+`
+
+const SearchInputIcon = styled(FontAwesomeIcon)`
+    position: absolute;
+    bottom : 9px;
+    left: 8px;
+    font-size: 27px;
+`
+
+
 
 const Wapper = styled.section`
     max-width: 700px;
@@ -157,10 +192,29 @@ const XMark = styled(FontAwesomeIcon)`
     cursor: pointer;
 `
 
+const BoardDivider = styled.div`
+    max-width: 700px;
+    width : 100%; 
+    height: 3px;
+    border-radius: 4px;
+    background-color: black;
+`
+
 function BoardList(){
     const [clicked, setClicked] = useState(false);
     const [clickedInfo, setClickedInfo] = useState([]);
     const [info, setInfo] = useState([])
+    const navigator = useNavigate();
+    const {register, handleSubmit} = useForm();
+
+    const getList = async() => {
+        try{
+            const data = await LogAPI.get("/posts/")
+            setInfo(data.data)
+        }catch(error){
+            console.log(error)
+        }
+    }
 
     const onBoxClick = (i) => {
         setClicked(prev => !prev);
@@ -171,21 +225,32 @@ function BoardList(){
         setClicked(prev => !prev);
     }
 
-    const getList = async() => {
+    const onValid = async(data) => {
         try{
-            const data = await LogAPI.get("/posts/")
-            setInfo(data.data)
-        }catch(error){
+            navigator(`/board/search/${data.search}`)
+        } catch(error){
             console.log(error)
         }
     }
-    console.log(info)
 
-    useEffect(()=> {
+    useEffect(() => {
         getList()
     },[])
 
     return(
+        <>
+        <SearchWapper>
+            <SearchSession>
+                <SearchForm onSubmit={handleSubmit(onValid)}>
+                    <SearchInputIcon icon={faMagnifyingGlass}/>
+                    <SearchInput 
+                        {...register("search", {required : true} )}
+                        placeholder = "제목, 내용, 해시태그 검색" >
+                    </SearchInput>
+                </SearchForm>
+            </SearchSession>
+        </SearchWapper>
+        <BoardDivider />
         <Wapper>
             <List>
                 {info?.map(prev => (
@@ -231,7 +296,7 @@ function BoardList(){
                             </BigBox>
                         </Overlay> : null}
             </AnimatePresence>
-        </Wapper>
+        </Wapper></>
     );
 }
 
