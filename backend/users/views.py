@@ -63,9 +63,7 @@ def user_rud(request, user_pk):
 
 @api_view(['GET'])
 def user_profile(request, user_id):
-    print(request, '!!')
     user = User.objects.get(pk=user_id)
-    print(user, 'mypagetest~!~!')
     if request.method == 'GET':
         # 채팅 정보
         rooms = Chatroom.objects.all()
@@ -160,6 +158,7 @@ def myprofile(request):
         # user 좋아요 목록
         like_user_post = Post.objects.filter(like_users=user)
         if like_user_post:
+            data['like_user_post'] = []
             for post in like_user_post:
                 profile = get_object_or_404(Profile, user=post.writer)
                 like_serializer = PostSerializer(post)
@@ -202,8 +201,7 @@ def myprofile(request):
                     "is_user": is_user,
                     "is_like_user": is_like_user
                 }
-                data['like_user_post'] = like_post_writer_set
-
+                data['like_user_post'].append(like_post_writer_set)
         return Response(data)
 
 # 츄르 충전
