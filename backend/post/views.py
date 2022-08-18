@@ -110,14 +110,17 @@ def post_detail(request, post_pk):
         if request.user.is_authenticated:
             if post.like_users.filter(pk=request.user.pk).exists():
                 post.like_users.remove(request.user)
+                is_user = 0
             else:
                 post.like_users.add(request.user)
+                is_user = 1
 
             post_serializer = PostSerializer(post)
             review_serializer = ReviewSerializer(reviews, many=True)
             data = {
                 "post": post_serializer.data,
                 "reviews": review_serializer.data,
+                "is_user": is_user
             }
             return Response(data)
 

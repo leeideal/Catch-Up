@@ -72,7 +72,6 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
-'''
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -82,7 +81,6 @@ REST_FRAMEWORK = {
         'users.authentications.JWTAuthentication',
     )
 }
-'''
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
