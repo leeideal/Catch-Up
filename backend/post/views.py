@@ -23,18 +23,61 @@ def mainpage(request):
             posts=Post.objects.all()[:6]
         else:
             posts=Post.objects.all()
-        post_serializer = PostSerializer(posts, many=True)
+        data = []
+        for post in posts:
+            profile = get_object_or_404(Profile, user=post.writer)
+            post_serializer = PostSerializer(post)
+            profile_serializer = ProfileSerializer(profile)
+
+            target_user_posts = Post.objects.filter(writer=post.writer)
+            sum_rate = 0
+            result_rate = 5
+            review_account = 0
+            for p in target_user_posts:
+                reviews = Review.objects.filter(post=p)
+                for review in reviews:
+                    sum_rate += review.rate
+                    review_account += 1
+            if review_account > 0:
+                result_rate = round(sum_rate/review_account)
+
+            result_taglist = []
+            if post.tag != None:
+                tag_list = post.tag.split('#')
+                for tag in tag_list:
+                    if len(tag) > 0:
+                        result_taglist.append('#'+tag)
+
+            if post.writer == request.user:
+                is_user = 1
+            else:
+                is_user = 0
+
+            if post.like_users.filter(pk=request.user.pk).exists():
+                is_like_user = 1
+            else:
+                is_like_user = 0
+
+            post_writer_set = {
+                "post": post_serializer.data,
+                "tag": result_taglist,
+                "writer": profile_serializer.data,
+                "rate": result_rate,
+                "is_user": is_user,
+                "is_like_user": is_like_user
+            }
+            data.append(post_writer_set)
         #최신 리뷰 4개
         if len(Review.objects.all())>=4:
             reviews=Review.objects.all()[:4]
         else:
             reviews=Review.objects.all()    
         review_serializer = ReviewSerializer(reviews, many=True)
-        data={
-            "posts":post_serializer.data,
+        result_data={
+            "posts":data,
             "reviews":review_serializer.data
         }
-        return Response(data=data)
+        return Response(data=result_data)
 
 
 @api_view(['GET', 'POST'])
