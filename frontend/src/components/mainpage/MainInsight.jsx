@@ -8,7 +8,7 @@ import "swiper/css";
 import { useState } from 'react';
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import BoardBox from '../board/BoardBox';
 
 const Background = styled.section`
@@ -186,10 +186,16 @@ const XMark = styled(FontAwesomeIcon)`
 function MainInsight(){
     const [clicked, setClicked] = useState(false);
     const [clickedInfo, setClickedInfo] = useState([]);
+    const navigate = useNavigate();
 
     const onBoxClick = (i) => {
         setClicked(prev => !prev);
         setClickedInfo(i)
+    }
+
+    const onBoard = () => {
+        navigate("/board")
+        window.location.reload();
     }
 
     const onOverlayClick = () =>{
@@ -201,7 +207,7 @@ function MainInsight(){
         <Background>
             <Header>
                 <Title>CATCHUP 들여다보기</Title>
-                <Link to="/board"><MoreInfo icon={faCirclePlus} size="2x"/></Link>
+                <MoreInfo onClick={onBoard} icon={faCirclePlus} size="2x"/>
             </Header>
             <Insight>
                 <Swiper slidesPerView={2.2}
