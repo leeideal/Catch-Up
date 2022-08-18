@@ -46,6 +46,7 @@ const List = styled.section`
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     padding: 60px 0;
+    min-height: 80vh;
     background-color: rgba(104,220,196);
     display: flex;
     flex-direction: column;

@@ -5,11 +5,12 @@ import { faCirclePlus, faCircleXmark  } from "@fortawesome/free-solid-svg-icons"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import BoardBox from '../board/BoardBox';
+import { LogAPI } from '../../axios';
 
 const Background = styled.section`
     height: 370px;
@@ -186,6 +187,7 @@ const XMark = styled(FontAwesomeIcon)`
 function MainInsight(){
     const [clicked, setClicked] = useState(false);
     const [clickedInfo, setClickedInfo] = useState([]);
+    const [info, setInfo] = useState([])
     const navigate = useNavigate();
 
     const onBoxClick = (i) => {
@@ -202,6 +204,20 @@ function MainInsight(){
         setClicked(prev => !prev);
         setClickedInfo([]);
     }
+
+    const getList = async() => {
+        try{
+            const data = await LogAPI.get("/posts/mainpage/")
+            setInfo(data.data)
+        }catch(error){
+            console.log(error)
+        }
+    }
+    console.log(info)
+
+    useEffect(() => {
+        getList()
+    },[clicked])
 
     return (
         <Background>
