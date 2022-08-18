@@ -4,6 +4,7 @@ import { faStar, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { isUser } from '../../atoms';
+import { LogAPI } from '../../axios';
 
 const Container = styled.div`
     width: 100%;
@@ -130,6 +131,17 @@ const Btn = styled.button`
     color : rgb(24,62,78);
 `
 
+const DBtn = styled.button`
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    padding: 7px 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color : rgb(24,62,78);
+`
+
 function BoardBox({props}) {
     const navigate = useNavigate()
     const checkUser = useRecoilValue(isUser);
@@ -143,6 +155,11 @@ function BoardBox({props}) {
             alert("로그인 이후 사용가능하십니다!");
             navigate("/login")
         }
+    }
+
+    const onDelete = async() => {
+        await LogAPI.delete(`/posts/${props.post.id}/`)
+        navigate("/board")
     }
     
     return(
@@ -175,8 +192,11 @@ function BoardBox({props}) {
                 <span>{props.post.like_users.length}</span>
             </Like>
             <Sign>
-                <Btn onClick={onClick}>채팅신청</Btn>
-                <p>츄르 {props.post.coin}개</p>
+                {
+                    props.is_user === 1 ? <><DBtn onClick={onDelete}>삭제하기</DBtn></> 
+                    : <><Btn onClick={onClick}>채팅신청</Btn>
+                    <p>츄르 {props.post.churu}개</p></>
+                }
             </Sign>
         </Container>
     )

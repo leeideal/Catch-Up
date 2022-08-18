@@ -78,6 +78,11 @@ function SideMenu(){
     const onClick = () => {
         setisMenuClick(prev => !prev);
     }
+    const onBoard= () => {
+        setisMenuClick(prev => !prev);
+        navigate("/board")
+        window.location.reload();
+    }
     const onChat = () => {
         setisMenuClick(prev => !prev);
         if (localStorage.getItem("user")){
@@ -124,11 +129,9 @@ function SideMenu(){
                                 CATUP 사용방법
                             </Item>
                         </Link>
-                        <Link to="/board">
-                            <Item onClick={onClick}>
+                            <Item onClick={onBoard}>
                                 멘토들의 이야기
                             </Item>
-                        </Link>
                         <Item onClick={onChat}>
                             채팅하기
                         </Item>

@@ -56,6 +56,7 @@ const List = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 60vh;
 `
 
 const BoxWapper = styled(motion.div)`
@@ -232,7 +233,7 @@ function BoardList(){
             console.log(error)
         }
     }
-
+    console.log(info)
     useEffect(() => {
         getList()
     },[])
