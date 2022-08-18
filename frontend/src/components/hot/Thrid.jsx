@@ -60,7 +60,7 @@ const List = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 70vh;
+    min-height: 80vh;
 `
 
 const BoxWapper = styled(motion.div)`
@@ -212,24 +212,25 @@ function Thrid () {
         setClicked(prev => !prev);
     }
 
-    // const onSeacrh = async() => {
-    //     try{
-    //         await LogAPI.get('/posts/search/')
-    //     } catch(error){
-    //         console.log(error)
-    //     }
-    // }
+    const onSeacrh = async() => {
+        try{
+            const data = await LogAPI.get('/posts/nekarakubae/')
+            setInfo(data.data);
+        } catch(error){
+            console.log(error)
+        }
+    }
 
-    // useEffect(() => {
-    //     onSeacrh()
-    // },[clicked])
+    useEffect(() => {
+        onSeacrh()
+    },[clicked])
 
 
     return(
         <ToCenter>
             <Background>
                 <LargeTitle>#네카라쿠베</LargeTitle>
-                <LargeSubTitle>당신이 원하는 멘토들의 글을 찾아보세요!</LargeSubTitle>
+                <LargeSubTitle>대한민국 5대 공룡 IT기업</LargeSubTitle>
         
         <Wapper>
             <List>

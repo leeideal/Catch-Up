@@ -60,7 +60,7 @@ const List = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 70vh;
+    min-height: 80vh;
 `
 
 const BoxWapper = styled(motion.div)`
@@ -203,7 +203,7 @@ function Fourth () {
     const [clickedInfo, setClickedInfo] = useState([]);
     const [info, setInfo] = useState([])
 
-    const onBoxClick = (i) => {
+    const onBoxClick = async(i) => {
         setClicked(prev => !prev);
         setClickedInfo(i)
     }
@@ -212,24 +212,25 @@ function Fourth () {
         setClicked(prev => !prev);
     }
 
-    // const onSeacrh = async() => {
-    //     try{
-    //         await LogAPI.get('/posts/search/')
-    //     } catch(error){
-    //         console.log(error)
-    //     }
-    // }
+    const onSeacrh = async() => {
+        try{
+            const data = await LogAPI.get('/posts/marketing/')
+            setInfo(data.data);
+        } catch(error){
+            console.log(error)
+        }
+    }
 
-    // useEffect(() => {
-    //     onSeacrh()
-    // },[clicked])
+    useEffect(() => {
+        onSeacrh()
+    },[clicked])
 
 
     return(
         <ToCenter>
             <Background>
                 <LargeTitle>#마케팅</LargeTitle>
-                <LargeSubTitle>당신이 원하는 멘토들의 글을 찾아보세요!</LargeSubTitle>
+                <LargeSubTitle>THINK DIFFERENT</LargeSubTitle>
         
         <Wapper>
             <List>

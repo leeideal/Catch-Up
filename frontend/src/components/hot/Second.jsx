@@ -60,7 +60,7 @@ const List = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 70vh;
+    min-height: 80vh;
 `
 
 const BoxWapper = styled(motion.div)`
@@ -212,24 +212,25 @@ function Second () {
         setClicked(prev => !prev);
     }
 
-    // const onSeacrh = async() => {
-    //     try{
-    //         await LogAPI.get('/posts/search/')
-    //     } catch(error){
-    //         console.log(error)
-    //     }
-    // }
+    const onSeacrh = async() => {
+        try{
+            const data = await LogAPI.get('/posts/overseas/')
+            setInfo(data.data);
+        } catch(error){
+            console.log(error)
+        }
+    }
 
-    // useEffect(() => {
-    //     onSeacrh()
-    // },[clicked])
+    useEffect(() => {
+        onSeacrh()
+    },[clicked])
 
 
     return(
         <ToCenter>
             <Background>
                 <LargeTitle>#해외취업</LargeTitle>
-                <LargeSubTitle>당신이 원하는 멘토들의 글을 찾아보세요!</LargeSubTitle>
+                <LargeSubTitle>세계로 뻗어나가는 새로운 흐름</LargeSubTitle>
         
         <Wapper>
             <List>

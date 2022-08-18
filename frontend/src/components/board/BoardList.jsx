@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardBox from './BoardBox';
-import { LogAPI } from '../../axios';
+import { LogAPI, API } from '../../axios';
 import { useForm } from 'react-hook-form';
 import { useRecoilState } from 'recoil';
 import { isBox } from '../../atoms';
@@ -212,8 +212,13 @@ function BoardList(){
 
     const getList = async() => {
         try{
-            const data = await LogAPI.get("/posts/")
-            setInfo(data.data)
+            if(localStorage.getItem("user")){
+                const data = await LogAPI.get("/posts/")
+                setInfo(data.data)
+            }else{
+                const data = await API.get("/posts/")
+                setInfo(data.data)
+            }
         }catch(error){
             console.log(error)
         }
