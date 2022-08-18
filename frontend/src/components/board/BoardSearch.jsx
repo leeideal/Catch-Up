@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react';
 import BoardBox from './BoardBox';
 import { LogAPI } from '../../axios';
 import { useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { isBox } from '../../atoms';
 
 const ToCenter = styled.div`
     width:100vw;
@@ -258,7 +260,7 @@ const NoWarnning = styled.h1`
 
 function BoardSearch() {
     const params = useParams();
-    const [clicked, setClicked] = useState(false);
+    const [clicked, setClicked] = useRecoilState(isBox);
     const [clickedInfo, setClickedInfo] = useState([]);
     const [info, setInfo] = useState([])
     const navigator = useNavigate();
@@ -298,7 +300,7 @@ function BoardSearch() {
 
     useEffect(() => {
         onSeacrh()
-    },[])
+    },[clicked])
     console.log(info === [])
 
     return(

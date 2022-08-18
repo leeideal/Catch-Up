@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { isUser } from '../../atoms';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { isBox, isUser } from '../../atoms';
 import { LogAPI } from '../../axios';
 
 const Container = styled.div`
@@ -145,13 +145,15 @@ const DBtn = styled.button`
 function BoardBox({props}) {
     const navigate = useNavigate()
     const checkUser = useRecoilValue(isUser);
+    const setAtom = useSetRecoilState(isBox)
 
     const onLike = async() => {
         await LogAPI.post(`/posts/${props.post.id}/`)
+        setAtom(false);
     }
 
     const onClick = () => {
-        if(checkUser){
+        if(checkUser || localStorage.getItem('user')){
             if (window.confirm(`이 채팅에 필요한 츄르의 개수는 ${props.post.coin}개 입니다! \n(채팅 내에서 전화번호, 이메일등의 개인정보 교환은 금지됩니다.)`)){
                 navigate("/chat")
             }
@@ -192,7 +194,7 @@ function BoardBox({props}) {
                 </BodyItem>
             </Body>
             <Like>
-                <Icon onClick={onLike} icon={faHeart} />
+                {props.is_like_user === 1 ? <Icon onClick={onLike} icon={faHeart} /> : <Icon onClick={onLike} style={{color:"#F5F5F5"}} icon={faHeart} />}
                 <span>{props.post.like_users.length}</span>
             </Like>
             <Sign>

@@ -91,15 +91,15 @@ def user_profile(request, user_id):
         if review_account > 0:
             result_rate = round(sum_rate/review_account, 1)
 
-        # user 좋아요 목록
-        like_user_post = Post.objects.filter(like_users=user)
-        like_serializer = PostSerializer(like_user_post, many=True)
+        # # user 좋아요 목록
+        # like_user_post = Post.objects.filter(like_users=user)
+        # like_serializer = PostSerializer(like_user_post, many=True)
 
         data = {
             "profile": profile_serializer.data,
             "room_count": room_count,
             "rate": result_rate,
-            'like_user_post': like_serializer.data,
+            # 'like_user_post': like_serializer.data,
         }
         return Response(data)
 
@@ -151,16 +151,59 @@ def myprofile(request):
         if review_account > 0:
             result_rate = round(sum_rate/review_account)
 
-        # user 좋아요 목록
-        like_user_post = Post.objects.filter(like_users=user)
-        like_serializer = PostSerializer(like_user_post, many=True)
-
         data = {
             "profile": profile_serializer.data,
             "room_count": room_count,
             "rate": result_rate,
-            'like_user_post': like_serializer.data,
         }
+
+        # user 좋아요 목록
+        like_user_post = Post.objects.filter(like_users=user)
+        if like_user_post:
+            for post in like_user_post:
+                profile = get_object_or_404(Profile, user=post.writer)
+                like_serializer = PostSerializer(post)
+                like_profile_serializer = ProfileSerializer(profile)
+
+                target_like_user_posts = Post.objects.filter(
+                    writer=post.writer)
+                sum_rate = 0
+                result_rate = 5
+                review_account = 0
+                for p in target_like_user_posts:
+                    reviews = Review.objects.filter(post=p)
+                    for review in reviews:
+                        sum_rate += review.rate
+                        review_account += 1
+                if review_account > 0:
+                    result_rate = round(sum_rate/review_account)
+
+                result_taglist = []
+                if post.tag != None:
+                    tag_list = post.tag.split('#')
+                    for tag in tag_list:
+                        if len(tag) > 0:
+                            result_taglist.append('#'+tag)
+                if post.writer == request.user:
+                    is_user = 1
+                else:
+                    is_user = 0
+
+                if post.like_users.filter(pk=request.user.pk).exists():
+                    is_like_user = 1
+                else:
+                    is_like_user = 0
+
+                like_post_writer_set = {
+                    "post": like_serializer.data,
+                    "tag": result_taglist,
+                    "writer": like_profile_serializer.data,
+                    "rate": result_rate,
+                    "is_user": is_user,
+                    "is_like_user": is_like_user
+                }
+                data['like_user_post'] = like_post_writer_set
+
         return Response(data)
 
 # 츄르 충전

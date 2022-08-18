@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import BoardBox from './BoardBox';
 import { LogAPI } from '../../axios';
 import { useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { isBox } from '../../atoms';
 
 const SearchWapper = styled.section`
     width: ${props => props.theme.mainWidth};
@@ -202,7 +204,7 @@ const BoardDivider = styled.div`
 `
 
 function BoardList(){
-    const [clicked, setClicked] = useState(false);
+    const [clicked, setClicked] = useRecoilState(isBox);
     const [clickedInfo, setClickedInfo] = useState([]);
     const [info, setInfo] = useState([])
     const navigator = useNavigate();
@@ -236,7 +238,7 @@ function BoardList(){
     console.log(info)
     useEffect(() => {
         getList()
-    },[])
+    },[clicked])
 
     return(
         <>
