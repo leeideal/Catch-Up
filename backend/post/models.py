@@ -34,3 +34,7 @@ class Review(models.Model):
     context = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+class Event(models.Model):
+    title = models.CharField(max_length=50)
+    content = models.TextField()

@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 
 from .models import *
 # serializers에서 Postserializer를 가져옴
-from .serializers import PostSerializer, ReviewSerializer
+from .serializers import EventSerializer, PostSerializer, ReviewSerializer
 from users.serializers import *
 # 포스트 리스트 뷰
 import jwt
@@ -219,3 +219,10 @@ def post_search(request):
 
     return Response(data=data)
     
+
+## Event
+@api_view(['GET'])
+def event_list(request):
+    events = Event.objects.all()
+    serializer = EventSerializer(events, many=True)
+    return Response(serializer.data)

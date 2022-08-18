@@ -1,3 +1,4 @@
+from multiprocessing import Event
 from rest_framework import serializers
 
 from users.models import User
@@ -38,3 +39,9 @@ class PostSerializer(serializers.ModelSerializer):
             'reviews',
             'churu',
         )
+
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+
+        model = Event
+        fields = '__all__'
