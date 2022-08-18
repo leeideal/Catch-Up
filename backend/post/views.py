@@ -48,12 +48,19 @@ def post_create(request):
             else :
                 is_user = 0
             
+            if post.like_users.filter(pk=request.user.pk).exists():
+                post.like_users.remove(request.user)
+                is_like_user = 0
+            else:
+                post.like_users.add(request.user)
+                is_like_user = 1
             post_writer_set = {
                 "post":post_serializer.data,
                 "tag":result_taglist,
                 "writer":profile_serializer.data,
                 "rate":result_rate,
-                "is_user":is_user
+                "is_user":is_user,
+                "is_like_user":is_like_user
             }
             data.append(post_writer_set)
 
