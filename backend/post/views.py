@@ -169,16 +169,17 @@ def review_detail(request, post_pk, review_pk):
 
 from django.db.models import Q
 
-@api_view(['GET'])
-def post_search(request, query):
+@api_view(['POST'])
+def post_search(request):
     posts = Post.objects.all()
-    if query:
+    query = request.data['query']
+    if query != '':
         posts = posts.filter(
         Q(title__icontains = query) | #제목
         Q(content__icontains = query) | #내용
         Q(tag__icontains = query) #태그
         )
-        data = []
+    data = []
     for post in posts:
         profile = get_object_or_404(Profile, user=post.writer)
         post_serializer = PostSerializer(post)
@@ -205,7 +206,6 @@ def post_search(request, query):
                 is_user = 1
             else :
                 is_user = 0
-            
             post_writer_set = {
                 "post":post_serializer.data,
                 "tag":result_taglist,
@@ -214,7 +214,6 @@ def post_search(request, query):
                 "is_user":is_user
             }
         data.append(post_writer_set)
-
     return Response(data=data)
     
 
