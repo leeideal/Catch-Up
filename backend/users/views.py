@@ -5,7 +5,8 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render, get_object_or_404
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 
 from .models import *
 from chat.models import *
@@ -62,6 +63,7 @@ def user_rud(request, user_pk):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def user_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     if request.method == 'GET':
