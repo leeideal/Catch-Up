@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isBox, isUser } from '../../atoms';
 import { LogAPI } from '../../axios';
+import { useEffect } from 'react';
 
 const Container = styled.div`
     width: 100%;
@@ -35,7 +36,7 @@ const Title = styled.h1`
 const Tags = styled.section`
     display: flex;
     flex-wrap: wrap;
-    line-height: 1.2;
+    line-height: 1.3;
     width: 90%;
     margin-top: 10px;
     p{
@@ -116,8 +117,10 @@ const SecondInfo = styled.div`
 
 const BodyItem = styled.div`
     width: 90%;
+    font-size: 17px;
+    font-weight: 500;
     word-break: break-all;
-    line-height: 1.3;
+    line-height: 1.5;
 `
 
 const Btn = styled.button`
@@ -167,6 +170,14 @@ function BoardBox({props}) {
         await LogAPI.delete(`/posts/${props.post.id}/`)
         navigate("/board")
     }
+
+    const look = async() => {
+        await LogAPI.get(`/posts/${props.post.id}/`)
+    }
+
+    useEffect(()=> {
+        look()
+    },[])
     
     return(
         <Container>
@@ -193,7 +204,7 @@ function BoardBox({props}) {
                 {props.post.content}
                 </BodyItem>
             </Body>
-            <Like>
+            {localStorage.getItem('user') ? <><Like>
                 {props.is_like_user === 1 ? <Icon onClick={onLike} icon={faHeart} /> : <Icon onClick={onLike} style={{color:"#F5F5F5"}} icon={faHeart} />}
                 <span>{props.post.like_users.length}</span>
             </Like>
@@ -203,7 +214,7 @@ function BoardBox({props}) {
                     : <><Btn onClick={onClick}>채팅신청</Btn>
                     <p>츄르 {props.post.churu}개</p></>
                 }
-            </Sign>
+            </Sign></> : null}
         </Container>
     )
 }
