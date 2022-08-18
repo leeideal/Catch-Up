@@ -18,6 +18,10 @@ import LikeList from './components/mypage/LikeList';
 import PreviewList from './components/mypage/PreviewList';
 import ChatRoom from "./components/chating/ChatRoom";
 import MypageChur from './components/mypage/MypageChur';
+import First from './components/hot/First';
+import Second from './components/hot/Second';
+import Third from './components/hot/Thrid';
+import Fourth from './components/hot/Fourth';
 
 function Routers(){
 // 메뉴바 클린 check State
@@ -41,6 +45,10 @@ return(
                 <Route path="/mypage/like" element={<LikeList />} />
                 <Route path="/mypage/preview" element={<PreviewList />} />
                 <Route path="/mypage/chur" element={<MypageChur />} />
+                <Route path="/hot/1" element={<First />} />
+                <Route path="/hot/2" element={<Second />} />
+                <Route path="/hot/3" element={<Third />} />
+                <Route path="/hot/4" element={<Fourth />} />
             </Routes>
             {isMenuClick && <SideMenu />}
         </ThemeProvider>

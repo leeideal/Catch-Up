@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from 'react';
+import { LogAPI } from '../../axios';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 
 const ToCenter = styled.div`
@@ -74,6 +77,7 @@ const Footer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom: 50px;
 `
 const HeadTitle = styled.h6`
     font-size: 20px;
@@ -117,22 +121,35 @@ const FooterNum = styled.span`
 
 
 function MypageChur () {
-    const [num, setNum] = useState();
-    const[nowNum, setNowNum] = useState()
+    const [chur, setChur] = useState()
+    const navigate = useNavigate()
+    const {register, handleSubmit, setValue} = useForm();
 
-    const onChange = (event) => {
-        console.log(event.currentTarget.value)
-        setNum(+event.tagert.value)
+    const getChur = async() => {
+        try{
+            const data = await LogAPI.get("/users/churu_charge/")
+            setChur(data.data)
+        }catch(error){
+            console.log(error)
+        }
     }
-    console.log(num);
 
-    const onValid = () => {
-
-    }
-    
     useEffect(() => {
-        setNowNum(+num + 100)
-    }, [num])
+        getChur()
+    },[])
+
+    const onValid = async(data) => {
+        const newData = {
+            "churu_charging" : data.churuNum
+        }
+        try{
+            await LogAPI.patch('/users/churu_charge/', newData)
+            navigate("/mypage")
+        } catch(error){
+            console.log(error)
+        }
+        setValue("churuNum", "");
+    }
 
     return(
         <ToCenter>
@@ -142,15 +159,15 @@ function MypageChur () {
                 <Box>
                     <Head>
                         <HeadTitle>Chur 충전하기</HeadTitle>
-                        <HeadForm onSubmit={onValid}>
-                            <Input type="number" onChange={onChange} value={num}  placeholder="원하는 Chur를 입력해주세요!" />
-                            <Btn>확인</Btn>
+                        <HeadForm onSubmit={handleSubmit(onValid)}>
+                            <Input {...register("churuNum" , {required : true}) } placeholder="원하는 Chur를 입력해주세요!" />
+                            <Btn type="submit">확인</Btn>
                         </HeadForm>
                     </Head>
                     <Arrow icon={faCloudArrowDown}></Arrow>
                     <Footer>
                         <FooterTitle>현재보유 Chur</FooterTitle>
-                        <FooterNum>{}</FooterNum>
+                        <FooterNum>{`${chur?.churu}`}</FooterNum>
                     </Footer>
                 </Box>
             </Background>
