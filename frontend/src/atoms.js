@@ -14,7 +14,7 @@ export const isTag = atom({
 
 export const isUser = atom({
     key:"isUser",
-    default : false
+    default : ""
 })
 
 // atom함수에 인자들

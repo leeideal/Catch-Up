@@ -17,6 +17,7 @@ import FixProfile from './components/mypage/FixProfile';
 import LikeList from './components/mypage/LikeList';
 import PreviewList from './components/mypage/PreviewList';
 import ChatRoom from "./components/chating/ChatRoom";
+import MypageChur from './components/mypage/MypageChur';
 
 function Routers(){
 // 메뉴바 클린 check State
@@ -39,6 +40,7 @@ return(
                 <Route path="/mypage/fix" element={<FixProfile />} />
                 <Route path="/mypage/like" element={<LikeList />} />
                 <Route path="/mypage/preview" element={<PreviewList />} />
+                <Route path="/mypage/chur" element={<MypageChur />} />
             </Routes>
             {isMenuClick && <SideMenu />}
         </ThemeProvider>

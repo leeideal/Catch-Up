@@ -114,7 +114,6 @@ function ProfileBox () {
     useEffect(() => {
         getProfile()
     },[])
-    console.log(info)
 
     return (
         <Container>
@@ -130,7 +129,7 @@ function ProfileBox () {
                         Chur
                     </ItemTitle>
                     <ItemBody>
-                        {info?.profile.coin}
+                        {info?.profile.churu}
                     </ItemBody>
                 </InfoItem>
                 <InfoItem>

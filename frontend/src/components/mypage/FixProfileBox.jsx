@@ -98,14 +98,17 @@ const Icon = styled(FontAwesomeIcon)`
 
 
 function FixProfileBox () {
-    const [info, setInfo] = useState()
     const navigate = useNavigate()
     const {register,  handleSubmit} = useForm();
     const [poto , setPoto] = useState()
+    const [nick, setNick] = useState();
+    const [intr, setIntr] = useState()
     const getProfile = async() => {
         try{
             const data = await LogAPI.get("/users/myprofile/")
-            setInfo(data.data)
+            setPoto(data.data.profile.image)
+            setNick(data.data.profile.nickname)
+            setIntr(data.data.profile.introduction)
         }catch(error){
             console.log(error)
         }
@@ -130,15 +133,21 @@ function FixProfileBox () {
           reader.readAsDataURL(file);
         }
       }
+
+    const onNick = (event) => {
+        setNick(event.target.value)
+    }
+
+    const onIntr = (event) => {
+        setIntr(event.target.value)
+    }
+    console.log(poto);
     
     const onValid = async (data) => {
-        if(poto == null){
-            setPoto("https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927")
-        }
         const newData = {
-            "nickname" : data.nickname,
-            "introduction" : data.intro,
-            "image" : poto,
+            "nickname" : nick,
+            "introduction" : intr,
+            "image" : poto ? poto : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`,
         }
         try{
             await LogAPI.patch('/users/myprofile_update/', newData)
@@ -152,7 +161,7 @@ function FixProfileBox () {
             <Box>
                 {/* API 연동이후 작업하기!! */}
                 <ProfilePoto>
-                    <Prepoto src={info?.profile.image ? info?.profile.image : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`}/>
+                    <Prepoto src={poto ? poto : `https://t1.daumcdn.net/cfile/tistory/2513B53E55DB206927`}/>
                     <label for="file">
                         <Icon icon={faCirclePlus}/>
                     </label>
@@ -160,12 +169,13 @@ function FixProfileBox () {
                 </ProfilePoto>
                 <FixItem>
                     <FixTitle>닉네임</FixTitle>
-                    <FixInput value={info?.profile.nickname ? info?.profile.nickname : undefined} {...register("nickname" , {required : true,})} placeholder="닉네임을 입력하세요!" />
+                    <FixInput {...register("nickname" )} placeholder="닉네임을 입력하세요!" value={nick ? nick : ""} onChange={onNick} />
                 </FixItem>
                 <FixItem>
                     <FixTitle>한줄소개</FixTitle>
-                    <TextInput value={info?.profile.introduction ? info?.profile.introduction : undefined} 
-                    {...register("intro" , {required : true,})} placeholder="자신을 소개해주세요!"/>
+                    <TextInput 
+                    {...register("intro" )} placeholder="자신을 소개해주세요!" value={intr ? intr : ""} 
+                    onChange={onIntr}/>
                 </FixItem>
             </Box>
             <BtnCon>

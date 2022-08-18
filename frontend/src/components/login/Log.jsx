@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdBadge, faLock, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
-import { setCookie } from '../../cookie';
 import { useSetRecoilState } from 'recoil';
 import { isUser } from '../../atoms';
 import { API } from '../../axios';
@@ -121,7 +120,7 @@ function Log() {
     const {register, handleSubmit} = useForm();
     const [isRe, setIsRe] = useState(false);
     const navigate = useNavigate();
-    const setUser = useSetRecoilState(isUser);
+    const setAtom = useSetRecoilState(isUser);
 
     const onValid = async(data) => {
         const result = {
@@ -131,14 +130,10 @@ function Log() {
         try{
             await API.post('/login/', result).then(
                 response => {
-                    setCookie('userid', response.data.access_token, {
-                        path : '/',
-                        secure : true,
-                        sameSite:"none",
-                    })
+                    localStorage.setItem("user", response.data.access_token,);
+                    setAtom(response.data.access_token);
                 }
             )
-            setUser(true);
             navigate("/")
         } catch(error){
             console.log(error)

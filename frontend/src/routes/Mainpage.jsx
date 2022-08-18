@@ -97,7 +97,6 @@ const MiddleCircle3 = styled.div`
 function Mainpage() {
 
 
-
 return (
     <ToCenter>
         <Background>
