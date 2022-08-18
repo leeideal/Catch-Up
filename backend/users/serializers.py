@@ -19,7 +19,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'introduction', 
             'image',
             'churu', 
-            'star', 
             )
 
 class ChuruSerializer(serializers.ModelSerializer):

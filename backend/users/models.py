@@ -59,8 +59,6 @@ class Profile(models.Model):
     image = models.TextField()
     churu = models.IntegerField(default=100)
     churu_charging = models.IntegerField(default=0)
-    star = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(5)])
-    # chat_info = models. # chatting 클래스 참조
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
