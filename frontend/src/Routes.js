@@ -22,6 +22,7 @@ import First from './components/hot/First';
 import Second from './components/hot/Second';
 import Third from './components/hot/Thrid';
 import Fourth from './components/hot/Fourth';
+import BoardSearch from './components/board/BoardSearch';
 
 function Routers(){
 // 메뉴바 클린 check State
@@ -36,6 +37,7 @@ return(
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/chat/room/:id/" element={<ChatRoom />} />
                 <Route path="/board" element={<Board />} />
+                <Route path="/board/search/:search" element={<BoardSearch />} />
                 <Route path="/posting" element={<Posting />} />
                 <Route path="/how" element={<How />} />
                 <Route path="/about" element={<About />} />
