@@ -1,9 +1,6 @@
 from django.db import models
 from users.models import User
 
-# Create your models here.
-
-
 class Post(models.Model):
     title = models.CharField(max_length=200)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -12,7 +9,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(User, related_name='likes_user', blank=True)
     view_users = models.IntegerField(default=0)
-    churu = models.IntegerField(default=0)
+    churu = models.IntegerField(default=0) # Front에서 field 이름을 coin으로.
     tag = models.CharField(max_length=20, null=True, blank=True)
 
 

@@ -216,7 +216,6 @@ def post_search(request):
             }
         data.append(post_writer_set)
     return Response(data=data)
-<<<<<<< HEAD
 
 # 개발자 
 @api_view(['GET'])
@@ -400,7 +399,6 @@ def post_marketing(request):
             data.append(post_writer_set)
 
     return Response(data=data)
-=======
     
 
 ## Event
@@ -409,4 +407,3 @@ def event_list(request):
     events = Event.objects.all()
     serializer = EventSerializer(events, many=True)
     return Response(serializer.data)
->>>>>>> 8deef4ddbf04ebd43369b0575a0538ba15bd9f01
