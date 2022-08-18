@@ -1,9 +1,8 @@
 import  styled  from 'styled-components';
 import { motion  ,AnimatePresence} from "framer-motion";
 import { useRecoilState } from "recoil";
-import { isMenu, isUser } from '../../atoms';
+import { isMenu } from '../../atoms';
 import { Link, useNavigate } from 'react-router-dom';
-import { removeCookie } from '../../cookie';
 
 const Container = styled.div`
     width:100%;
@@ -18,7 +17,7 @@ const Wapper = styled(motion.div)`
     width : 100%; 
     height: 2600px; // 나중에 높이에 따라서 바꿔야 하는 설정!!
     position: absolute;
-    top: 53px;
+    top: 52.2px;
     z-index: 100;
     display: flex;
     justify-content: center;
@@ -66,26 +65,24 @@ const LogOut = styled.div`
 
 function SideMenu(){
     const [isMenuClick ,setisMenuClick] = useRecoilState(isMenu);
-    const [user, setUser] = useRecoilState(isUser);
     const navigate = useNavigate();
-
-    console.log(user)
     const onLog = () => {
         setisMenuClick(prev => !prev);
     }
     const onLogout = () => {
-        setUser(false);
-        removeCookie('userid')
+        localStorage.clear()
         setisMenuClick(prev => !prev);
-        window.reload();
+        navigate("/")
+        window.location.reload();
     }
     const onClick = () => {
         setisMenuClick(prev => !prev);
     }
     const onChat = () => {
         setisMenuClick(prev => !prev);
-        if (user){
+        if (localStorage.getItem("user")){
             navigate("/chat");
+            window.location.reload();
         }else{
             alert("로그인 이후 사용가능하십니다!")
             navigate("/login")
@@ -93,8 +90,9 @@ function SideMenu(){
     }
     const onMypage = () => {
         setisMenuClick(prev => !prev);
-        if (user){
+        if (localStorage.getItem("user")){
             navigate("/mypage")
+            window.location.reload();
         }else{
             alert("로그인 이후 사용가능하십니다!")
             navigate("/login")
@@ -108,7 +106,7 @@ function SideMenu(){
                 {isMenuClick && (<Wapper variants={sideMenuVars} initial="start" animate="end" exit={{ scale: 0 }}>
                     <MList>
                         {
-                            user ? <Link to="/">
+                            localStorage.getItem("user") ? <Link to="/">
                                 <LogOut onClick={onLogout}>로그아웃</LogOut> 
                             </Link>: <Link to="/login">
                             <Log onClick={onLog}>
