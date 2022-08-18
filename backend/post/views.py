@@ -5,8 +5,8 @@ from django.shortcuts import render, get_object_or_404
 # Response 추가
 from rest_framework.response import Response
 # HTTP method를 처리하기 위한 api_view 데코레이터 추가
-from rest_framework.decorators import api_view
-
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from .models import *
 # serializers에서 Postserializer를 가져옴
 from .serializers import EventSerializer, PostSerializer, ReviewSerializer
@@ -15,6 +15,7 @@ from users.serializers import *
 import jwt
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def mainpage(request):
     #메인페이지에 뿌려줄
     if request.method=='GET':
@@ -81,6 +82,7 @@ def mainpage(request):
 
 
 @api_view(['GET', 'POST'])
+@permission_classes([AllowAny])
 def post_create(request):
     # GET 방식을 받아왔을 때
     if request.method == 'GET':
@@ -109,7 +111,7 @@ def post_create(request):
                 for tag in tag_list:
                     if len(tag) > 0:
                         result_taglist.append('#'+tag)
-
+            
             if post.writer == request.user:
                 is_user = 1
             else:
@@ -151,6 +153,7 @@ def post_create(request):
 
 
 @api_view(['GET', 'PATCH', 'DELETE', 'POST'])
+@permission_classes([AllowAny])
 def post_detail(request, post_pk):
     post = get_object_or_404(Post, pk=post_pk)
     reviews = Review.objects.filter(post=post_pk)
@@ -204,6 +207,7 @@ def post_detail(request, post_pk):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def review_list(request):
     reviews = Review.objects.all()
     serializer = ReviewSerializer(reviews, many=True)
@@ -250,6 +254,7 @@ def review_detail(request, post_pk, review_pk):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def post_search(request):
     posts = Post.objects.all()
     query = request.data['query']
@@ -301,6 +306,7 @@ def post_search(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def post_developer(request):
     posts = Post.objects.all()
     data = []
@@ -354,6 +360,7 @@ def post_developer(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def post_overseas(request):
     posts = Post.objects.all()
     data = []
@@ -408,6 +415,7 @@ def post_overseas(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def post_nekarakubae(request):
     posts = Post.objects.all()
     data = []
@@ -462,6 +470,7 @@ def post_nekarakubae(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def post_marketing(request):
     posts = Post.objects.all()
     data = []
@@ -515,6 +524,7 @@ def post_marketing(request):
 
 # Event
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def event_list(request):
     events = Event.objects.all()
     serializer = EventSerializer(events, many=True)
