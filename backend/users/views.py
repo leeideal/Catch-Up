@@ -134,3 +134,21 @@ def myprofile(request):
             "rate": result_rate
         }
         return Response(data)
+
+#츄르 충전
+@api_view(['GET', 'PATCH'])
+def churu_charge(request):
+    user = request.user
+    if request.method == 'GET':
+        profile = Profile.objects.get(user=user)
+        serializer = ChuruSerializer(profile)
+        profile.churu_charging = 0
+        return Response(data=serializer.data)
+    elif request.method == 'PATCH':
+        profile = Profile.objects.get(user=user)
+        serializer = ChuruSerializer(profile, data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            profile.churu += profile.churu_charging
+            profile.save()
+        return Response(data=serializer.data)

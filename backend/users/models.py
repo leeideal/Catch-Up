@@ -57,7 +57,8 @@ class Profile(models.Model):
     introduction = models.TextField(null=True)
     #image= models.ImageField(upload_to = "profile/", blank=True, null=True) # 사용자들이 시간표를 올릴 때마다 media/profile에 저장됨
     image = models.TextField()
-    coin = models.IntegerField(default=100)
+    churu = models.IntegerField(default=100)
+    churu_charging = models.IntegerField(default=0)
     star = models.IntegerField(default=5, validators=[MinValueValidator(0), MaxValueValidator(5)])
     # chat_info = models. # chatting 클래스 참조
 
