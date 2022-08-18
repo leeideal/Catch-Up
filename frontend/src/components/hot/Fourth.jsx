@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faHeart, faEye, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from 'react';
-import { LogAPI } from '../../axios';
+import { LogAPI, API } from '../../axios';
 import { useRecoilState } from 'recoil';
 import { isBox } from '../../atoms';
 import BoardBox from '../board/BoardBox';
@@ -214,8 +214,13 @@ function Fourth () {
 
     const onSeacrh = async() => {
         try{
-            const data = await LogAPI.get('/posts/marketing/')
-            setInfo(data.data);
+            if(localStorage.getItem("user")){
+                const data = await LogAPI.get("/posts/marketing/")
+                setInfo(data.data)
+            }else{
+                const data = await API.get("/posts/marketing/")
+                setInfo(data.data)
+            }
         } catch(error){
             console.log(error)
         }

@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from 'react-router-dom';
 import BoardBox from '../board/BoardBox';
-import { LogAPI } from '../../axios';
+import { LogAPI, API } from '../../axios';
 
 const Background = styled.section`
     height: 370px;
@@ -167,8 +167,13 @@ function MainInsight(){
 
     const getList = async() => {
         try{
-            const data = await LogAPI.get("/posts/mainpage/")
-            setInfo(data.data.posts)
+            if(localStorage.getItem("user")){
+                const data = await LogAPI.get("/posts/mainpage/")
+                setInfo(data.data.posts)
+            }else{
+                const data = await API.get("/posts/mainpage/")
+                setInfo(data.data.posts)
+            }
         }catch(error){
             console.log(error)
         }

@@ -23,6 +23,7 @@ import Second from './components/hot/Second';
 import Third from './components/hot/Thrid';
 import Fourth from './components/hot/Fourth';
 import BoardSearch from './components/board/BoardSearch';
+import OtherProfile from './routes/OtherProfile';
 
 function Routers(){
 // 메뉴바 클린 check State
@@ -47,6 +48,7 @@ return(
                 <Route path="/mypage/like" element={<LikeList />} />
                 <Route path="/mypage/preview" element={<PreviewList />} />
                 <Route path="/mypage/chur" element={<MypageChur />} />
+                <Route path="/profile/:id" element={<OtherProfile />} />
                 <Route path="/hot/1" element={<First />} />
                 <Route path="/hot/2" element={<Second />} />
                 <Route path="/hot/3" element={<Third />} />

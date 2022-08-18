@@ -4,7 +4,7 @@ import { faStar, faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isBox, isUser } from '../../atoms';
-import { LogAPI } from '../../axios';
+import { LogAPI, API } from '../../axios';
 import { useEffect } from 'react';
 
 const Container = styled.div`
@@ -51,13 +51,13 @@ const Body = styled.section`
     width: 100%;
     background-color: white;
     border-radius: 15px;
+    margin-bottom: 40px;
     display: flex;
     justify-content: center;
     padding: 30px 0px;
 
 `
 const Like = styled.section`
-    margin-top: 40px;
     display: flex;
     flex-direction: column;
     span{
@@ -82,6 +82,7 @@ const FirstInfo = styled.div`
 `
 
 const Img = styled.img`
+    cursor: pointer;
     width : 50px;
     height : 50px;
     border-radius: 50%;
@@ -92,6 +93,7 @@ const FirstInfoItem = styled.div`
 `
 
 const Name = styled.p`
+    cursor: pointer;
     font-size: 14px;
     font-weight: 600;
     text-align: center;
@@ -172,7 +174,15 @@ function BoardBox({props}) {
     }
 
     const look = async() => {
-        await LogAPI.get(`/posts/${props.post.id}/`)
+        if(localStorage.getItem("user")){
+            await LogAPI.get(`/posts/${props.post.id}/`)
+        }else{
+            await API.get(`/posts/${props.post.id}/`)
+        }
+    }
+
+    const onUserProfile = () => {
+        navigate(`/profile/${props.writer.id}`)
     }
 
     useEffect(()=> {
@@ -183,9 +193,9 @@ function BoardBox({props}) {
         <Container>
             <Header>
                 <FirstInfo>
-                    <Img src={props.writer.image} />
+                    <Img onClick={onUserProfile} src={props.writer.image} />
                     <FirstInfoItem>
-                        <Name>{props.writer.nickname}</Name>
+                        <Name onClick={onUserProfile} >{props.writer.nickname}</Name>
                         <Rate><FontAwesomeIcon icon={faStar} /> <span>{props.rate}</span></Rate>
                     </FirstInfoItem>
                 </FirstInfo>
