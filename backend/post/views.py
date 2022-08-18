@@ -14,6 +14,28 @@ from users.serializers import *
 # 포스트 리스트 뷰
 import jwt
 
+@api_view(['GET'])
+def mainpage(request):
+    #메인페이지에 뿌려줄
+    if request.method=='GET':
+        #최신 게시물 6개
+        if len(Post.objects.all())>=6:
+            posts=Post.objects.all()[:6]
+        else:
+            posts=Post.objects.all()
+        post_serializer = PostSerializer(posts, many=True)
+        #최신 리뷰 4개
+        if len(Review.objects.all())>=4:
+            reviews=Review.objects.all()[:4]
+        else:
+            reviews=Review.objects.all()    
+        review_serializer = ReviewSerializer(reviews, many=True)
+        data={
+            "posts":post_serializer.data,
+            "reviews":review_serializer.data
+        }
+        return Response(data=data)
+
 
 @api_view(['GET', 'POST'])
 def post_create(request):

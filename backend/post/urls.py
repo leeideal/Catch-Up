@@ -20,4 +20,6 @@ urlpatterns = [
     path('marketing/', post_marketing, name="post_marketing"),
     # 이벤트
     path('event/', event_list, name='eventList'),
+    # 메인페이지
+    path('mainpage/', mainpage, name="mainpage"),
 ]
