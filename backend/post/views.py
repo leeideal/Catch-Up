@@ -70,8 +70,7 @@ def post_create(request):
         for tag in taglist:
             tagstr += tag
         tagstr.strip("/")
-        # 여기
-        churu = int(request.data['churu'])
+        churu = int(request.data['coin'])
         if serializer.is_valid(raise_exception=True):
             serializer.save(writer = request.user, tag=tagstr, churu=churu)
             return Response(data=serializer.data)
