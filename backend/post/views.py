@@ -195,24 +195,25 @@ def post_search(request):
                 review_account += 1
         if review_account > 0:
             result_rate = round(sum_rate/review_account)
+            
+        result_taglist=[]
+        if post.tag != None:
+            tag_list = post.tag.split('#')
+            for tag in tag_list:
+                if len(tag)>0:
+                    result_taglist.append('#'+tag)
+        if post.writer == request.user:
+            is_user = 1
+        else :
+            is_user = 0
 
-            result_taglist=[]
-            if post.tag != None:
-                tag_list = post.tag.split('#')
-                for tag in tag_list:
-                    if len(tag)>0:
-                        result_taglist.append('#'+tag)
-            if post.writer == request.user:
-                is_user = 1
-            else :
-                is_user = 0
-            post_writer_set = {
-                "post":post_serializer.data,
-                "tag":result_taglist,
-                "writer":profile_serializer.data,
-                "rate":result_rate,
-                "is_user":is_user
-            }
+        post_writer_set = {
+            "post":post_serializer.data,
+            "tag":result_taglist,
+            "writer":profile_serializer.data,
+            "rate":result_rate,
+            "is_user":is_user
+        }
         data.append(post_writer_set)
     return Response(data=data)
     
