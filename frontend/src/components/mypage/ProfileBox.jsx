@@ -104,9 +104,13 @@ function ProfileBox () {
     const [info, setInfo] = useState()
     const navigate = useNavigate()
     const getProfile = async() => {
+        console.log("aa")
         try{
+            console.log("1")
             const data = await LogAPI.get("/users/myprofile/")
+            console.log("2")
             setInfo(data.data)
+            console.log("3")
         }catch(error){
             console.log(error)
         }

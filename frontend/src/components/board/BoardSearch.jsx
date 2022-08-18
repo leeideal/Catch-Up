@@ -319,7 +319,6 @@ function BoardSearch() {
         </SearchWapper>
         <BoardDivider />
         <Wapper>
-            {info === [] ?
             <List>
                 {info?.map(prev => (
                     <BoxWapper layoutId={prev.post.id+""} onClick={() => onBoxClick(prev)} key={prev.post.id}>
@@ -349,7 +348,7 @@ function BoardSearch() {
                     </Box>
                     </BoxWapper>
                 ))}
-            </List> : <List><NoWarnning>{`${params.search}의 대한 게시글이 존재하지 않습니다!`}</NoWarnning></List>}
+            </List>
 
             {/* 모달창 */}
             <AnimatePresence>{clicked ? 

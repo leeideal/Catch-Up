@@ -146,6 +146,10 @@ function BoardBox({props}) {
     const navigate = useNavigate()
     const checkUser = useRecoilValue(isUser);
 
+    const onLike = async() => {
+        await LogAPI.post(`/posts/${props.post.id}/`)
+    }
+
     const onClick = () => {
         if(checkUser){
             if (window.confirm(`이 채팅에 필요한 츄르의 개수는 ${props.post.coin}개 입니다! \n(채팅 내에서 전화번호, 이메일등의 개인정보 교환은 금지됩니다.)`)){
@@ -188,7 +192,7 @@ function BoardBox({props}) {
                 </BodyItem>
             </Body>
             <Like>
-                <Icon icon={faHeart} />
+                <Icon onClick={onLike} icon={faHeart} />
                 <span>{props.post.like_users.length}</span>
             </Like>
             <Sign>
