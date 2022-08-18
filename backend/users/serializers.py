@@ -18,6 +18,13 @@ class ProfileSerializer(serializers.ModelSerializer):
             'nickname', 
             'introduction', 
             'image',
-            'coin', 
+            'churu', 
             'star', 
             )
+
+class ChuruSerializer(serializers.ModelSerializer):
+    churu = serializers.ReadOnlyField()
+    churu_charging = 0
+    class Meta:
+        model = Profile
+        fields = ('id', 'churu', 'churu_charging')
