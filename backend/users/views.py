@@ -57,14 +57,18 @@ def user_rud(request, user_pk):
 def user_profile(request, user_id):
     user = User.objects.get(pk=user_id)
     if request.method == 'GET':
+        # 채팅 정보
         rooms = Chatroom.objects.all()
         room_count = 0
         for room in rooms:
             if room.is_user_in_talkers(user):
                 room_count += 1
+        
+        # user 프로필
         profile = Profile.objects.get(user=user)
-        serializer = ProfileSerializer(profile)
+        profile_serializer = ProfileSerializer(profile)
 
+        # 상대방 user 프로필
         target_user_posts = Post.objects.filter(writer=user)
         sum_rate = 0
         result_rate = 5
@@ -75,12 +79,17 @@ def user_profile(request, user_id):
                 sum_rate += review.rate
                 review_account += 1
         if review_account > 0:
-            result_rate = round(sum_rate/review_account)
+            result_rate = round(sum_rate/review_account, 1)
+
+        # user 좋아요 목록
+        like_user_post = Post.objects.filter(like_users = user)
+        like_serializer = PostSerializer(like_user_post, many=True)
 
         data = {
-            "profile": serializer.data,
+            "profile": profile_serializer.data,
             "room_count": room_count,
-            "rate": result_rate
+            "rate": result_rate,
+            'like_user_post': like_serializer.data,
         }
         return Response(data)
 
@@ -115,7 +124,7 @@ def myprofile(request):
             if room.is_user_in_talkers(user):
                 room_count += 1
         profile = Profile.objects.get(user=user)
-        serializer = ProfileSerializer(profile)
+        profile_serializer = ProfileSerializer(profile)
         target_user_posts = Post.objects.filter(writer=user)
         sum_rate = 0
         result_rate = 5
@@ -128,10 +137,15 @@ def myprofile(request):
         if review_account > 0:
             result_rate = round(sum_rate/review_account)        
 
+        # user 좋아요 목록
+        like_user_post = Post.objects.filter(like_users = user)
+        like_serializer = PostSerializer(like_user_post, many=True)
+
         data = {
-            "profile": serializer.data,
+            "profile": profile_serializer.data,
             "room_count": room_count,
-            "rate": result_rate
+            "rate": result_rate,
+            'like_user_post': like_serializer.data,
         }
         return Response(data)
 
