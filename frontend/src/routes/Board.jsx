@@ -3,8 +3,7 @@ import BoardList from '../components/board/BoardList';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePen } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { isUser } from '../atoms';
+
 
 const ToCenter = styled.div`
     width:100vw;
@@ -54,14 +53,13 @@ const Write = styled(FontAwesomeIcon)`
 `
 
 function Board() {
-    const user = useRecoilValue(isUser);
     return (
         <ToCenter>
             <Background>
                 <Title>멘토 이야기 모아보기</Title>
                 <SubTitle>당신이 원하는 멘토들의 글을 찾아보세요!</SubTitle>
                 <BoardList />
-                {user && <Link to="/posting" ><Write icon={faSquarePen} /></Link>}
+                {localStorage.getItem('user') && <Link to="/posting" ><Write icon={faSquarePen} /></Link>}
             </Background>
         </ToCenter>
     )

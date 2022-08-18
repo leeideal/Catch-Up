@@ -1,12 +1,60 @@
 import styled from 'styled-components';
+import { useParams } from "react-router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar, faHeart, faEye, faCircleXmark , faMagnifyingGlass} from "@fortawesome/free-solid-svg-icons";
+import { faSquarePen, faStar, faHeart, faEye, faCircleXmark , faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from "framer-motion";
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import BoardBox from './BoardBox';
 import { LogAPI } from '../../axios';
 import { useForm } from 'react-hook-form';
+
+const ToCenter = styled.div`
+    width:100vw;
+    display: flex;
+    justify-content: center;
+`
+
+const Background = styled.section`
+    background-color: ${props => props.theme.mainBackColor};
+    max-width: 700px;
+    width : 100%; 
+    margin-top: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
+const LargeTitle = styled.h1`
+    color: rgb(24,62,78);
+    margin-top:40px;
+    margin-bottom: 15px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
+    text-align: left;
+`
+
+const LargeSubTitle = styled.h4`
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    width: ${props => props.theme.mainWidth};
+    max-width:${props => props.theme.mainMaxWidth};
+    text-align: left;
+    color : rgba(0,0,0,0.5);
+    margin-bottom: 55px;
+`
+
+
+const Write = styled(FontAwesomeIcon)`
+    position: fixed;
+    font-size: 50px;
+    bottom : 10%;
+    right: 10%;
+    cursor: pointer;
+`
 
 const SearchWapper = styled.section`
     width: ${props => props.theme.mainWidth};
@@ -56,6 +104,7 @@ const List = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 60vh;
 `
 
 const BoxWapper = styled(motion.div)`
@@ -200,21 +249,20 @@ const BoardDivider = styled.div`
     background-color: black;
 `
 
-function BoardList(){
+const NoWarnning = styled.h1`
+    font-size: 30px;
+    text-align: center;
+    font-weight: 800;
+
+`
+
+function BoardSearch() {
+    const params = useParams();
     const [clicked, setClicked] = useState(false);
     const [clickedInfo, setClickedInfo] = useState([]);
     const [info, setInfo] = useState([])
     const navigator = useNavigate();
     const {register, handleSubmit} = useForm();
-
-    const getList = async() => {
-        try{
-            const data = await LogAPI.get("/posts/")
-            setInfo(data.data)
-        }catch(error){
-            console.log(error)
-        }
-    }
 
     const onBoxClick = (i) => {
         setClicked(prev => !prev);
@@ -223,6 +271,21 @@ function BoardList(){
 
     const onOverlayClick = () =>{
         setClicked(prev => !prev);
+    }
+
+    const onSeacrh = async() => {
+        const search = {
+            "query" : params.search
+        }
+        try{
+            await LogAPI.post('/posts/search/', search).then(
+                response => {
+                    setInfo(response.data)
+                }
+            )
+        } catch(error){
+            console.log(error)
+        }
     }
 
     const onValid = async(data) => {
@@ -234,12 +297,16 @@ function BoardList(){
     }
 
     useEffect(() => {
-        getList()
+        onSeacrh()
     },[])
+    console.log(info === [])
 
     return(
-        <>
-        <SearchWapper>
+        <ToCenter>
+            <Background>
+                <LargeTitle>{`${params.search}검색결과`}</LargeTitle>
+                <LargeSubTitle>당신이 원하는 멘토들의 글을 찾아보세요!</LargeSubTitle>
+                <SearchWapper>
             <SearchSession>
                 <SearchForm onSubmit={handleSubmit(onValid)}>
                     <SearchInputIcon icon={faMagnifyingGlass}/>
@@ -252,6 +319,7 @@ function BoardList(){
         </SearchWapper>
         <BoardDivider />
         <Wapper>
+            {info === [] ?
             <List>
                 {info?.map(prev => (
                     <BoxWapper layoutId={prev.post.id+""} onClick={() => onBoxClick(prev)} key={prev.post.id}>
@@ -281,7 +349,7 @@ function BoardList(){
                     </Box>
                     </BoxWapper>
                 ))}
-            </List>
+            </List> : <List><NoWarnning>{`${params.search}의 대한 게시글이 존재하지 않습니다!`}</NoWarnning></List>}
 
             {/* 모달창 */}
             <AnimatePresence>{clicked ? 
@@ -296,8 +364,10 @@ function BoardList(){
                             </BigBox>
                         </Overlay> : null}
             </AnimatePresence>
-        </Wapper></>
+        </Wapper>
+                {localStorage.getItem("user") && <Link to="/posting" ><Write icon={faSquarePen} /></Link>}
+            </Background>
+        </ToCenter>
     );
 }
-
-export default BoardList;
+export default BoardSearch;
