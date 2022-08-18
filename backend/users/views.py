@@ -1,3 +1,5 @@
+import base64
+from django.conf import settings
 from django.shortcuts import render
 
 # Create your views here.
@@ -10,9 +12,11 @@ from chat.models import *
 from .serializers import *
 
 from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 # user create
+
+
 @api_view(['GET', 'POST'])
 def user_list_create(request):
     if request.method == 'GET':
@@ -20,15 +24,17 @@ def user_list_create(request):
         serializer = UserSerializer(users, many=True)
 
         return Response(data=serializer.data)
-    
+
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
-        
+
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(data=serializer.data)
 
 # user detail, update, delete
+
+
 @api_view(['GET', 'PATCH', 'DELETE'])
 def user_rud(request, user_pk):
     user = get_object_or_404(User, pk=user_pk)
@@ -47,15 +53,19 @@ def user_rud(request, user_pk):
 
     elif request.method == 'DELETE':
         user.delete()
-        data={
-            'user' : user_pk
+        data = {
+            'user': user_pk
         }
         return Response(data)
 
 # profile
+
+
 @api_view(['GET'])
 def user_profile(request, user_id):
+    print(request, '!!')
     user = User.objects.get(pk=user_id)
+    print(user, 'mypagetest~!~!')
     if request.method == 'GET':
         # 채팅 정보
         rooms = Chatroom.objects.all()
@@ -63,7 +73,7 @@ def user_profile(request, user_id):
         for room in rooms:
             if room.is_user_in_talkers(user):
                 room_count += 1
-        
+
         # user 프로필
         profile = Profile.objects.get(user=user)
         profile_serializer = ProfileSerializer(profile)
@@ -82,7 +92,7 @@ def user_profile(request, user_id):
             result_rate = round(sum_rate/review_account, 1)
 
         # user 좋아요 목록
-        like_user_post = Post.objects.filter(like_users = user)
+        like_user_post = Post.objects.filter(like_users=user)
         like_serializer = PostSerializer(like_user_post, many=True)
 
         data = {
@@ -93,19 +103,21 @@ def user_profile(request, user_id):
         }
         return Response(data)
 
-import base64
-from django.conf import settings
+
 # myprofile update
+
+
 @api_view(['GET', 'PATCH'])
 def profile_update(request):
     user = request.user
+    print(user)
     if request.method == 'GET':
         profile = Profile.objects.get(user=user)
         serializer = ProfileSerializer(profile)
         return Response(data=serializer.data)
     elif request.method == 'PATCH':
         profile = Profile.objects.get(user=user)
-        
+
         serializer = ProfileSerializer(profile, data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
@@ -114,6 +126,8 @@ def profile_update(request):
 # user모델이 삭제되면 profile이 자동 삭제됨으로 삭제 구현 X
 
 # myprofile
+
+
 @api_view(['GET'])
 def myprofile(request):
     user = request.user
@@ -135,10 +149,10 @@ def myprofile(request):
                 sum_rate += review.rate
                 review_account += 1
         if review_account > 0:
-            result_rate = round(sum_rate/review_account)        
+            result_rate = round(sum_rate/review_account)
 
         # user 좋아요 목록
-        like_user_post = Post.objects.filter(like_users = user)
+        like_user_post = Post.objects.filter(like_users=user)
         like_serializer = PostSerializer(like_user_post, many=True)
 
         data = {
@@ -149,7 +163,9 @@ def myprofile(request):
         }
         return Response(data)
 
-#츄르 충전
+# 츄르 충전
+
+
 @api_view(['GET', 'PATCH'])
 def churu_charge(request):
     user = request.user
