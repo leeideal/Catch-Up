@@ -70,7 +70,8 @@ def post_create(request):
         for tag in taglist:
             tagstr += tag
         tagstr.strip("/")
-        churu = int(request.data['coin'])
+        # 여기
+        churu = int(request.data['churu'])
         if serializer.is_valid(raise_exception=True):
             serializer.save(writer = request.user, tag=tagstr, churu=churu)
             return Response(data=serializer.data)
@@ -218,4 +219,186 @@ def post_search(request):
         data.append(post_writer_set)
 
     return Response(data=data)
-    
+
+# 개발자 
+@api_view(['GET'])
+def post_developer(request):
+    posts = Post.objects.all()
+    data = []
+    for post in posts:
+        result_taglist=[]
+        if post.tag != None:
+            tag_list = post.tag.split('#')
+            for tag in tag_list:
+                if len(tag)>0:
+                    result_taglist.append('#'+tag)
+                    
+        if '#개발자' in result_taglist:
+            profile = get_object_or_404(Profile, user=post.writer)
+            post_serializer = PostSerializer(post)
+            profile_serializer = ProfileSerializer(profile)
+                
+            target_user_posts = Post.objects.filter(writer=post.writer)
+            sum_rate = 0
+            result_rate = 5
+            review_account = 0
+            for p in target_user_posts:
+                reviews = Review.objects.filter(post=p)
+                for review in reviews:
+                    sum_rate += review.rate
+                    review_account += 1
+                if review_account > 0:
+                    result_rate = round(sum_rate/review_account)
+
+            if post.writer == request.user:
+                is_user = 1
+            else :
+                is_user = 0
+                
+            post_writer_set = {
+                "post":post_serializer.data,
+                "tag":result_taglist,
+                "writer":profile_serializer.data,
+                "rate":result_rate,
+                "is_user":is_user
+            }
+            data.append(post_writer_set)
+    return Response(data=data)
+
+# 해외취업 
+@api_view(['GET'])
+def post_overseas(request):
+    posts = Post.objects.all()
+    data = []
+    for post in posts:
+        result_taglist=[]
+        if post.tag != None:
+            tag_list = post.tag.split('#')
+            for tag in tag_list:
+                if len(tag)>0:
+                    result_taglist.append('#'+tag)
+                    
+        if '#해외취업' in result_taglist:
+            profile = get_object_or_404(Profile, user=post.writer)
+            post_serializer = PostSerializer(post)
+            profile_serializer = ProfileSerializer(profile)
+                
+            target_user_posts = Post.objects.filter(writer=post.writer)
+            sum_rate = 0
+            result_rate = 5
+            review_account = 0
+            for p in target_user_posts:
+                reviews = Review.objects.filter(post=p)
+                for review in reviews:
+                    sum_rate += review.rate
+                    review_account += 1
+                if review_account > 0:
+                    result_rate = round(sum_rate/review_account)
+
+            if post.writer == request.user:
+                is_user = 1
+            else :
+                is_user = 0
+                
+            post_writer_set = {
+                "post":post_serializer.data,
+                "tag":result_taglist,
+                "writer":profile_serializer.data,
+                "rate":result_rate,
+                "is_user":is_user
+            }
+            data.append(post_writer_set)
+
+    return Response(data=data)
+
+# 네카라쿠배 
+@api_view(['GET'])
+def post_nekarakubae(request):
+    posts = Post.objects.all()
+    data = []
+    for post in posts:
+        result_taglist=[]
+        if post.tag != None:
+            tag_list = post.tag.split('#')
+            for tag in tag_list:
+                if len(tag)>0:
+                    result_taglist.append('#'+tag)
+                    
+        if '#네카라쿠배' in result_taglist:
+            profile = get_object_or_404(Profile, user=post.writer)
+            post_serializer = PostSerializer(post)
+            profile_serializer = ProfileSerializer(profile)
+                
+            target_user_posts = Post.objects.filter(writer=post.writer)
+            sum_rate = 0
+            result_rate = 5
+            review_account = 0
+            for p in target_user_posts:
+                reviews = Review.objects.filter(post=p)
+                for review in reviews:
+                    sum_rate += review.rate
+                    review_account += 1
+                if review_account > 0:
+                    result_rate = round(sum_rate/review_account)
+
+            if post.writer == request.user:
+                is_user = 1
+            else :
+                is_user = 0
+                
+            post_writer_set = {
+                "post":post_serializer.data,
+                "tag":result_taglist,
+                "writer":profile_serializer.data,
+                "rate":result_rate,
+                "is_user":is_user
+            }
+            data.append(post_writer_set)
+
+    return Response(data=data)
+
+# 마케팅
+@api_view(['GET'])
+def post_marketing(request):
+    posts = Post.objects.all()
+    data = []
+    for post in posts:
+        result_taglist=[]
+        if post.tag != None:
+            tag_list = post.tag.split('#')
+            for tag in tag_list:
+                if len(tag)>0:
+                    result_taglist.append('#'+tag)
+                    
+        if '#마케팅' in result_taglist:
+            profile = get_object_or_404(Profile, user=post.writer)
+            post_serializer = PostSerializer(post)
+            profile_serializer = ProfileSerializer(profile)
+                
+            target_user_posts = Post.objects.filter(writer=post.writer)
+            sum_rate = 0
+            result_rate = 5
+            review_account = 0
+            for p in target_user_posts:
+                reviews = Review.objects.filter(post=p)
+                for review in reviews:
+                    sum_rate += review.rate
+                    review_account += 1
+                if review_account > 0:
+                    result_rate = round(sum_rate/review_account)
+
+            if post.writer == request.user:
+                is_user = 1
+            else :
+                is_user = 0
+                
+            post_writer_set = {
+                "post":post_serializer.data,
+                "tag":result_taglist,
+                "writer":profile_serializer.data,
+                "rate":result_rate,
+                "is_user":is_user
+            }
+            data.append(post_writer_set)
+
+    return Response(data=data)
