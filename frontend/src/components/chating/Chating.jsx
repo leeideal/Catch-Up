@@ -50,17 +50,19 @@ const ChatBtn = styled.button`
 const ChatList = styled.section`
     overflow: scroll;
     height: 60vh;
+    width: 100%;
 `
 
 function Chating() {
     const isAtom = useRecoilValue(isChatId)
     const {register, handleSubmit, setValue} = useForm();
     const [info, setInfo] = useState([])
+    
 
     const reGetChat = async() => {
         try{
-            const chatData = await LogAPI.get(`chat/room/${isAtom}/`)
-            setInfo(chatData)
+            const chatData = await LogAPI.get(`chat/room/${localStorage.getItem("chat_key")}/`)
+            setInfo(chatData.data)
         }catch(error){
             console.log(error)
         }
@@ -70,27 +72,45 @@ function Chating() {
         const chat = {
             "content" : data.toDo
         }
-        await LogAPI.post(`chat/room/${isAtom}/`, chat)
+        localStorage.setItem("insure_chat_key", localStorage.getItem("chat_key"))
+        await LogAPI.post(`chat/room/${localStorage.getItem("chat_key")}/`, chat)
         reGetChat()
         setValue("toDo", "")
     }
     const getChat = async() => {
+        var key = ""
+        if ( localStorage.getItem("chat_key")){
+            key = localStorage.getItem("chat_key")
+        } else {
+            key = localStorage.getItem("insure_chat_key")
+        }
         try{
-            const chatData = await LogAPI.get(`chat/room/${isAtom}/`)
-            setInfo(chatData)
+            const chatData = await LogAPI.get(`chat/room/${key}/`)
+            setInfo(chatData.data)
         }catch(error){
             console.log(error)
         }
     }
+    console.log(localStorage.getItem("chat_key"))
     useEffect(()=>{
+        if(isAtom === ""){
+            localStorage.setItem("chat_key", localStorage.getItem("insure_chat_key"))
+        }else{
+            localStorage.setItem("chat_key", isAtom)
+            localStorage.setItem("insure_chat_key", localStorage.getItem("chat_key"))
+        }
         getChat()
     },[isAtom])
-    console.log(info)
     console.log(isAtom)
+    console.log(info.chat_list)
 
     return(
         <Container>
-            <ChatList></ChatList>
+            <ChatList>
+                {info.chat_list && info.chat_list.map(i => (
+                    <div key={i.chat.id} style={{fontSize:"100px"}}>{i.chat.content}</div>
+                ))}
+            </ChatList>
             <ChatForm onSubmit={handleSubmit(onValid)}>
                 <Chatinput {...register("toDo", {required : true})} />
                 <ChatBtn>전송</ChatBtn>
