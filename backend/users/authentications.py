@@ -20,8 +20,8 @@ class JWTAuthentication(authentication.BaseAuthentication):
         return self.authenticate_credentials(access_token)
 
     def authenticate_credentials(self, token):
-        # if isinstance(token, bytes):
-        #     token = token.decode("ascii")
+        if isinstance(token, bytes):
+            token = token.decode("ascii")
         # print(token)
         try:
             data = jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
@@ -29,8 +29,8 @@ class JWTAuthentication(authentication.BaseAuthentication):
             expired_at = data["exp"]
             user = User.objects.get(id=user_id)
 
-        # except (jwt.DecodeError, jwt.InvalidAlgorithmError, AttributeError):
-            #raise exceptions.AuthenticationFailed("Invalid Token")
+        except (jwt.DecodeError, jwt.InvalidAlgorithmError, AttributeError):
+            raise exceptions.AuthenticationFailed("Invalid Token")
         except jwt.DecodeError:
             raise exceptions.AuthenticationFailed("Invalid Token, DecodeError")
         except jwt.InvalidAlgorithmError:
