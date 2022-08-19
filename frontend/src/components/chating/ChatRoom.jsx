@@ -50,7 +50,7 @@ const ChatBtn = styled.button`
 `
 
 const ChatList = styled.div`
-    z-index: 100;
+    z-index: 0;
     overflow-y: scroll;
     height: 60vh;
     width: 100%;
@@ -310,7 +310,7 @@ function ChatRoom () {
                             exit={{ opacity: 0 }}
                         >
                             <BigBox>
-                                <ByeBox/>
+                                <ByeBox props={info}/>
                             </BigBox>
                         </Overlay> : null}
             </AnimatePresence>
