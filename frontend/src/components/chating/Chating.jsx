@@ -1,17 +1,21 @@
 import styled from "styled-components";
 import {useForm} from "react-hook-form"
+import { useRecoilValue } from 'recoil';
+import { isChatId } from '../../atoms';
+import { LogAPI } from "../../axios";
+import { useEffect, useState } from 'react';
 
 const Container = styled.section`
     color: rgb(24, 62, 78);
     display: flex;
     flex-direction: column;
     width: 90%;
-    
     padding-top: 100px;
 `
 
 const ChatForm = styled.form`
     position: relative;
+    margin-bottom: 10px;
 `
 const Chatinput = styled.textarea`
     width: 100%;
@@ -44,15 +48,45 @@ const ChatBtn = styled.button`
 `
 
 const ChatList = styled.section`
-    
+    overflow: scroll;
+    height: 60vh;
 `
 
 function Chating() {
+    const isAtom = useRecoilValue(isChatId)
     const {register, handleSubmit, setValue} = useForm();
-    const onValid = (data) => {
-      console.log(data);
-      setValue("toDo", "")
+    const [info, setInfo] = useState([])
+
+    const reGetChat = async() => {
+        try{
+            const chatData = await LogAPI.get(`chat/room/${isAtom}/`)
+            setInfo(chatData)
+        }catch(error){
+            console.log(error)
+        }
     }
+
+    const onValid = async(data) => {
+        const chat = {
+            "content" : data.toDo
+        }
+        await LogAPI.post(`chat/room/${isAtom}/`, chat)
+        reGetChat()
+        setValue("toDo", "")
+    }
+    const getChat = async() => {
+        try{
+            const chatData = await LogAPI.get(`chat/room/${isAtom}/`)
+            setInfo(chatData)
+        }catch(error){
+            console.log(error)
+        }
+    }
+    useEffect(()=>{
+        getChat()
+    },[isAtom])
+    console.log(info)
+    console.log(isAtom)
 
     return(
         <Container>

@@ -1,5 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { LogAPI } from "../../axios";
+import { useState, useEffect } from 'react';
 
 
 const Wapper = styled.section`
@@ -83,17 +85,21 @@ const ChatBody = styled.p`
 
 
 function ChatList () {
+    const [info, setInfo] = useState([])
     const navigate = useNavigate()
-    // const cathAixos = async () => {
-    //     try{
-    //         const {list} = await API.get("");
-    //         return list;
-    //     } catch(error){
-    //         console.log(error)
-    //     }
-    // }
+    const cathAixos = async () => {
+        try{
+            const list = await LogAPI.get("/chat/room/");
+            setInfo(list)
+        } catch(error){
+            console.log(error)
+        }
+    }
 
-    // const {isLoading , data} = useQuery("chatList", cathAixos )
+    console.log(info)
+    useEffect(()=> {
+        cathAixos()
+    },[])
     
     const gotoChat = () => {
         //navigate
