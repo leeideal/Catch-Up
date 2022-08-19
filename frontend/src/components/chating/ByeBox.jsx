@@ -79,6 +79,7 @@ function ByeBox({props}) {
                 "context" : data.content
             }
             await LogAPI.post("/posts/review/create/" ,newData);
+            await LogAPI.delete(`/chat/room/${props.chat_list[0].chat.chatroo}`)
             nav("/chat")
         }catch(error){
             console.log(error)

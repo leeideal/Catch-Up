@@ -20,8 +20,8 @@ class JWTAuthentication(authentication.BaseAuthentication):
         return self.authenticate_credentials(access_token)
 
     def authenticate_credentials(self, token):
-        if isinstance(token, bytes):
-            token = token.decode("ascii")
+        # if isinstance(token, bytes):
+        #     token = token.decode("ascii")
         # print(token)
         try:
             data = jwt.decode(token, settings.SECRET_KEY, algorithms="HS256")
