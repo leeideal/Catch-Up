@@ -310,7 +310,7 @@ function ChatRoom () {
                             exit={{ opacity: 0 }}
                         >
                             <BigBox>
-                                <ByeBox/>
+                                <ByeBox props={info}/>
                             </BigBox>
                         </Overlay> : null}
             </AnimatePresence>

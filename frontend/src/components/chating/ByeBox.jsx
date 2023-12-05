@@ -63,7 +63,7 @@ const Btn = styled.button`
     cursor: pointer;
 `
 
-function ByeBox() {
+function ByeBox({props}) {
     const {register, handleSubmit} = useForm()
     const [star, setStar] = useState(0);
     const nav = useNavigate()
@@ -72,12 +72,18 @@ function ByeBox() {
         setStar(Math.round(nextValue));
     }
     const onValid = async(data) => {
-        const newData = {
-            "rate" : star,
-            "content" : data.content
+        try{
+            const newData = {
+                "chatroom_id" : String(props.chat_list[0].chat.chatroom),
+                "rate" : star,
+                "context" : data.content
+            }
+            await LogAPI.post("/posts/review/create/" ,newData);
+            await LogAPI.delete(`/chat/room/${props.chat_list[0].chat.chatroo}`)
+            nav("/chat")
+        }catch(error){
+            console.log(error)
         }
-        await LogAPI.post("" ,newData);
-        nav("/chat")
     }
     return(
         <Wapper>
